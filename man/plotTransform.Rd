@@ -25,8 +25,8 @@ colVec = NULL, separateWindows = FALSE)
 }
 
 \arguments{
-    \item{theObject}{\code{ChIPSeqSpike} A \code{ChIPSeqSpikeDatasetList} or 
-                                         \code{ChIPSeqSpikeDataset} object
+    \item{theObject}{A \code{ChIPSeqSpikeDatasetList} or 
+                                         \code{ChIPSeqSpikeDataset} object}
 
     \item{legends}{Logical indicating if legend should be indicated. Default is
                    FALSE.}
