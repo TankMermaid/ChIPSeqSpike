@@ -1,0 +1,788 @@
+---
+title: "ChIPSeqSpike: ChIP-seq data scaling with spike-in control"
+author: 
+- name: Nicolas Descostes
+  affiliation: Howard Hughes Medical Institute - New York University
+  email: nicolas.descostes@gmail.com
+package: ChIPSeqSpike
+output: 
+  BiocStyle::pdf_document
+vignette: >
+  %\VignetteIndexEntry{ChIPSeqSpike}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+# Introduction
+
+Chromatin Immuno-Precipitation followed by Sequencing (ChIP-Seq) is used to 
+determine the binding sites of any protein of interest, such as transcription 
+factors or histones with or without a specific modification, at a genome scale 
+[@barski2007; @park2009]. ChIP-Seq entails treating cells with a cross-linking 
+reagent such as formaldehyde; isolating the chromatin and fragmenting it by 
+ sonication; immuno-precipitating with antibodies directed against the protein 
+ of interest; reversing crosslink; DNA purification and amplification before 
+ submission to sequencing. These many steps can introduce biases that make 
+ ChIP-Seq more qualitative than quantitative. Different efficiencies in nuclear
+extraction, DNA sonication, DNA amplification or antibody recognition make it 
+challenging to distinguish between true differential binding events and 
+technical variability.
+
+This problem was addressed by using an external spike-in control to keep track 
+of technical biases between conditions [@orlando2014; @bonhoure2014]. 
+Exogenous DNA from a different non-closely related species is inserted during 
+the protocol to infer scaling factors. This modification was shown to be 
+especially important for revealing global histone modification differences, 
+that are not caught by traditional downstream data normalization techniques, 
+such as Histone H3 lysine-27 trimethyl (H3K27me3) upon Ezh2 inhibitor treatment
+ [@trojer2016].
+
+ChIPSeqSpike provides tools for ChIP-Seq spike-in normalization, assessment and
+ analysis. Conversely to a majority of ChIP-Seq related tools, ChIPSeqSpike 
+does not rely on peak detection. However, if one wants to focus on peaks, 
+ChIPSeqSpike is flexible enough to do so. ChIPSeqSpike provides ready to use 
+scaled bigwig files as output and scaling factors values. We believe that 
+ChIPSeqSpike will be of great value to the genomics community.
+
+
+# Standard workflow
+## Quick start
+A case study reported Chromatin Immuno-Precipitation followed by Sequencing 
+(ChIP-Seq) experiments that did not show differences upon inhibitor treatment 
+with traditional normalization procedures [@orlando2014].
+These experiments looked at the effect of DOT1L inhibitor EPZ5676 [@daigle2013]
+ treatment on the Histone H3 lysine-79 dimethyl (H3K79me2) modification in 
+Jurkat cells. DOT1L is involved in the RNA Polymerase II pause release and 
+licensing of transcriptional elongation. H3K79me2 ChIP-Seq were performed on 
+cells treated with 0%, 50% and 100% EPZ5676 inhibitor (see next section for 
+details on data).
+
+The following code performs spike-in normalization with a wrapper function on 
+data sub-samples. A 'test_chipseq' temporary results folder is also created.  
+\newline
+```{r message = FALSE, warning = FALSE}
+library("ChIPSeqSpike");
+
+## Preparing testing data
+info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike");
+bam_path <- system.file("extdata/bam_files", package="ChIPSeqSpike");
+bigwig_path <- system.file("extdata/bigwig_files", package="ChIPSeqSpike");
+gff_vec <- system.file("extdata/test_coord.gff", package="ChIPSeqSpike");
+genome_name <- "hg19";
+output_folder <- "test_chipseqspike";
+bigwig_files <- system.file("extdata/bigwig_files", 
+                            c("H3K79me2_0-filtered.bw",
+                              "H3K79me2_100-filtered.bw",
+                              "H3K79me2_50-filtered.bw",
+                              "input_0-filtered.bw",
+                              "input_100-filtered.bw",
+                              "input_50-filtered.bw"), package="ChIPSeqSpike");
+
+## Copying example files
+dir.create("./test_chipseqspike");
+mock <- file.copy(bigwig_files, "test_chipseqspike");
+
+## Performing spike-in normalization
+csds_test <- spikePipe(info_file_csv, bam_path, bigwig_path, gff_vec, 
+                       genome_name, outputFolder = output_folder);
+```
+
+
+
+## Data
+
+The data used in this documentation represent a gold-standard example of the 
+importance of using spike-in controls with ChIP-Seq experiments. It uses 
+chromatin from Drosophila Melanogaster as exogenous spike-in control to correct
+ experimental biases. Without a spike-in control and using only RPM 
+normalization, proper differences in the H3K79me2 histone modification in human
+ Jurkat cells upon EPZ5676 inhibitor treatment were not observed 
+[@orlando2014]. 
+
+This dataset is made of bigwig and bam files of H3K79me2 ChIP-Seq data and 
+corresponding input DNA controls 
+(see [input subtraction section](#inputSubtraction)).
+Bam files contain data aligned to the Human reference genome Hg19 or to the 
+Drosophila reference genome dm3. The latest is used to compute external 
+spike-in scaling factors. All above mentioned data are available at 0%, 50% and
+ 100% EPZ5676 inhibitor treatment.
+
+### Testing data
+
+For the sake of memory and computation time efficiency, bigwig files used in 
+this vignette are limited to chromosome 1. Reads falling in the top 10% mostly 
+bound genes (at 0% treatment) with length between 700-800 bp were kept in bam 
+files. For efficient plotting functions testing, only binding values of the top
+ 100 mostly bound genes are used and can be accessed with 
+`data(result_extractBinding)`. Scores for factors and read counts were computed 
+on the whole dataset and are available through 
+`data(result_estimateScalingFactors)` (see below).
+
+### Complete data
+
+The whole dataset is accessible at 
+[GSE60104](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60104). 
+Specifically, the data used are H3K79me2 0% (GSM1465004), H3K79me2 50% 
+(GSM1465006), H3K79me2 100% (GSM1465008), input DNA 0% (GSM1511465), input DNA 
+50% (GSM1511467) and input DNA 100% (GSM1511469).
+
+The data were treated as follows: Quality of sequencing was assessed with 
+[FastQC v0.11.4](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/). 
+Reads having less than 80% of quality scores above 25 were removed with 
+NGSQCToolkit v2.3.3 [@ngsqctoolkit]. Homo Sapiens Hg19 and Drosophila 
+Melanogaster dm3 from Illumina igenomes UCSC Collection were used. ChIP-Seq 
+data were aligned with Bowtie2 v2.1.0 [@bowtie2] with default parameters. Sam 
+outputs were converted to Bam with Samtools v1.0.6 [@samtools] and sorted with 
+[Picard tools v1.88](http://broadinstitute.github.io/picard). Data were further
+ processed with Pasha v0.99.21 [@pasha]. Fixed steps wiggle files were 
+converted to bigwigs with 
+[wigToBigWig](http://hgdownload.soe.ucsc.edu/admin/exe/).
+
+Results with the complete dataset are also provided in this documentation.
+
+
+## Detailed operations
+
+The spike-in normalization procedure consists of 4 steps: RPM scaling, input 
+DNA subtraction, RPM scaling reversal and exogenous spike-in DNA scaling. Below
+ is detailed the different steps included in the above mentioned wrapper 
+function 'spikePipe'.
+
+### Dataset generation
+
+The different data necessary for proper spike-in scaling are provided in a csv 
+or a tab separated txt file. The columns must contain proper names and are 
+organized as follows: Experiment name (expName); bam file name of data aligned 
+to the endogenous reference genome (endogenousBam); bam file name of data 
+aligned to the exogenous reference genome (exogenousBam); the corresponding 
+input DNA bam file aligned to the endogenous reference genome (inputBam); the 
+fixed steps bigwig file name of data aligned to the endogenous reference genome
+ (bigWigEndogenous) and the fixed steps bigwig file names of the corresponding 
+input DNA experiment aligned to the endogenous reference genome (bigWigInput).
+\newline
+```{r message = FALSE, warning = FALSE}
+info_file <- read.csv(info_file_csv);
+head(info_file);
+````
+
+From the info file, two kinds of objects can be generated: either a 
+ChIPSeqSpikeDataset or a ChIPSeqSpikeDatasetList depending upon the number of 
+input DNA experiments. A ChIPSeqSpikeDatasetList object is a list of 
+ChIPSeqSpikeDataset object that is created if several input DNA experiments are
+ used. In this latter case, ChIP-Seq experiments are grouped by their 
+corresponding input DNA. The function spikeDataset creates automatically the 
+suitable object. The folder path to the bam and fixed steps bigwig files must 
+be provided.
+\newline
+```{r message = FALSE, warning = FALSE}
+csds_test <- spikeDataset(info_file_csv, bam_path, bigwig_path);
+is(csds_test);
+````
+
+
+#### Boost mode
+
+Reading and processing bigwig and bam files can be memory-greedy. By default, 
+files are read, processed and written at each step of the normalization 
+procedure to enable data treatment on a regular desktop computer. One could 
+wish to reduce the time of computation especially when processing a lot of 
+data. ChIPSeqSpike reduces such time by providing a boost mode.
+\newline
+```{r message = FALSE, warning = FALSE}
+csds_testBoost <- spikeDataset(info_file_csv, bam_path, bigwig_path, 
+boost = TRUE);
+is(csds_testBoost);
+````
+Binding scores for each experiment are stored in a GRanges object and are 
+directly accessible by functions.
+\newline
+```{r message = FALSE, warning = FALSE}
+getLoadedData(csds_testBoost[[1]])
+````
+Even if optimizing greatly the time of computing, one should know that loading 
+binding scores of all experiments is greedy in memory and should be used with 
+caution. The boost mode is ignored in the rest of the vignette, but all code 
+provided in the following sections, with the exception of section 3.1 (
+plotTransform), can be run with csds_testBoost.
+
+### Summary and control
+
+A ChIPSeqSpikeDataset object, at this point, is made of slots storing paths to 
+files. In order to compute scaling factors, bam counts are first computed. A 
+scaling factor is defined as 1000000/bam_count. The method 
+estimateScalingFactors returns bam counts and endogenous/exogenous scaling 
+factors for all experiments. In the following example, scores are computed 
+using chromosome 1 only. Scores on the whole dataset are also indicated below.
+\newline
+```{r message = FALSE, warning = FALSE}
+csds_test <- estimateScalingFactors(csds_test, verbose = FALSE);
+````
+The different scores can be visualized:
+\newline
+```{r message = FALSE, warning = FALSE}
+## Scores on testing sub-samples
+spikeSummary(csds_test);
+
+##Scores on whole dataset
+data(result_estimateScalingFactors);
+spikeSummary(csds);
+````
+
+An important parameter to keep in mind when performing spike-in with ChIP-seq 
+is the percentage of exogenous DNA relative to that of endogenous DNA. The 
+amount of exogenous DNA should be between 2-25% of endogenous DNA. The method 
+getRatio returns the percentage of exogenous DNA and throws a warning if this 
+percentage is not within the 2-25% range. In theory, having more than 25% 
+exogenous DNA should not affect the normalization, whereas having less than 2% 
+is usually not sufficient to perform a reliable normalization.
+\newline
+```{r message = FALSE}
+getRatio(csds_test);
+
+## Result on the whole dataset
+data(ratio);
+ratio
+````
+
+### RPM scaling
+
+The first normalization applied to the data is the 'Reads Per Million' (RPM) 
+mapped reads. The method 'scaling' is used to achieve such normalization using 
+default parameters. It is also used to reverse the RPM normalization and apply 
+exogenous scaling factors (see sections [2.3.5](#RPMreversal) and 
+[2.3.6](#exoscaling)).
+\newline
+\newline
+```{r message = FALSE, warning = FALSE}
+csds_test <- scaling(csds_test, outputFolder = output_folder);
+````
+ In the context of this vignette, output_folder is precised since the testing 
+files were copied to a temporary 'test_chipseqspike' folder. The slots 
+containing paths to files will be updated to this folder. If not precised, 
+the RPM scaled bigwig files are written to the same folder containing bigwigs. 
+This statement is also applicable for the next operations below.
+
+### Input Subtraction {#inputSubtraction}
+
+When Immuno-Precipitating (IP) DNA bound by a given protein, a control is 
+needed to distinguish background noise from true signal. This is typically 
+achieved by performing a mock IP, omitting the use of antibody. After mock IP 
+sequencing, one can notice peaks of signal above background. These peaks have 
+to be removed from the experiment since they represent false positives. The 
+inputSubtraction method simply subtracts scores of the input DNA experiment 
+from the corresponding ones. If in boost mode, the input subtracted values are 
+stored in the dataset object and no files are written. For this latter case, 
+the method exportBigWigs can be used to output the transformed files.
+\newline
+```{r message = FALSE, warning = FALSE}
+csds_test <- inputSubtraction(csds_test);
+````
+
+### RPM scaling reversal {#RPMreversal}
+
+After RPM and input subtraction normalization, the RPM normalization is 
+reversed in order for the data to be normalized by the exogenous scaling 
+factors.
+\newline
+```{r message = FALSE, warning = FALSE}
+csds_test <- scaling(csds_test, reverse = TRUE);
+````
+\newpage
+### Exogenous scaling {#exoscaling}
+
+Finally, exogenous scaling factors are applied to the data.
+\newline
+```{r message = FALSE, warning = FALSE}
+csds_test <- scaling(csds_test, type = "exo");
+````
+
+### Extract binding values
+
+The last step of data processing is to extract and format binding scores in 
+order to use plotting methods. The 'extractBinding' method extracts binding 
+scores at different locations and stores these values in the form of 
+PlotSetArray objects and matrices (see ?extractBinding for more details). The 
+scores are retrieved on annotations provided in a gff file. If one wishes to 
+focus on peaks, their coordinates should be submitted at this step. The genome 
+name must also be provided. For details about installing the required BSgenome 
+package corresponding to the endogenous organism, see the 
+[BSgenome](https://bioconductor.org/packages/release/bioc/html/BSgenome.html) 
+package documentation.
+\newline
+```{r message = FALSE, warning = FALSE}
+csds_test <- extractBinding(csds_test, gff_vec, genome_name);
+````
+
+# Plotting data
+
+ChIPSeqSpike offers several graphical methods for normalization diagnosis and 
+data exploration. These choices enable one to visualize each step of the 
+normalization through exploring inter-samples differences using profiles, 
+heatmaps, boxplots and correlation plots.
+
+In the following sections, the testing data are restricted to the 100 mostly 
+bound genes. Results on the complete set of hg19 genes are also indicated.
+
+## Meta-profiles and transformations
+
+The first step of spike-in normalized ChIP-Seq data analysis is an inter-sample
+ comparison by meta-gene or meta-annotation profiling. The method 'plotProfile'
+ automatically plots all experiments at the start, midpoint, end and composite 
+locations of the annotations provided to the method extractBinding in gff 
+format. Here is the result of profiling H3K79me2 on the 100 mostly bound genes 
+at 0% inhibitor treatment (figure \ref{figure1}).
+\newline
+```{r message = FALSE, warning = FALSE, fig.cap="Spiked experiment upon different percentages concentrations of inhibitor treatment \\label{figure1}", fig.height = 6}
+data(result_extractBinding);
+plotProfile(csds, legend = TRUE);
+````
+
+The unspiked data (however RPM scaled and input subtracted) can be added 
+to the plot (figure \ref{figure2}).
+\newline
+```{r message = FALSE, warning = FALSE, fig.cap="Same as figure 1 including unspiked data \\label{figure2}", fig.height = 7}
+plotProfile(csds, legend = TRUE, notScaled = TRUE);
+````     
+
+\newpage
+The effect of the individual processing steps for each experiment can also be 
+plotted.
+\newline
+```{r message = FALSE, warning = FALSE}
+plotTransform(csds, legend = TRUE, separateWindows = TRUE);
+````
+
+
+## Heatmaps
+
+plotHeatmaps is a versatile method based on the plotHeatmap method of the 
+seqplots package [@seqplots]. This method enables one to represent data at 
+different locations (start, end, midpoint, composite) and at different stages 
+of the normalization process. Different scaling (log, zscore, etc) and 
+different clustering approaches (k-means, hierarchical, etc) can be used (see 
+documentation for more details).
+
+Figure \ref{figure3} shows a k-means clustering of spiked data, each group 
+being sub-sorted by decreasing values.
+\newline
+\newline
+```{r message = FALSE, warning = FALSE, fig.cap="kmeans clustering of spiked data \\label{figure3}", fig.height = 5}
+plotHeatmaps(csds, nb_of_groups = 2, clustering_method = "kmeans");
+````
+
+\newpage
+Figure \ref{figure4} illustrates a clustering by decreasing values on the whole
+ dataset.
+
+![Spiked data organized by decreasing values at start position of all refseq Hg19 genes \label{figure4}](/home/descostes/Documents/analysis/packages_development/ChIPSeqSpike/figures_for_presentation/heatmaps_start-2.png)
+
+
+## Boxplots
+
+boxplotSpike plots boxplots of the mean values of ChIP-seq experiments on the
+annotations given to the extractBinding method. It offers a wide range of 
+graphical representations that includes violin plots (see documentation for 
+details). Figure \ref{figure5} illustrates all transformations of all dataset 
+indicating confidence intervals.
+\newpage
+```{r message = FALSE, warning = FALSE, fig.cap="Complete representation of the whole procedure using boxplots (without outliers)\\label{figure5}", fig.height = 6}
+par(cex.axis=0.5)
+boxplotSpike(csds, rawFile = TRUE, rpmFile = TRUE, bgsubFile = TRUE, 
+revFile = TRUE, spiked = TRUE, outline = FALSE);
+````      
+
+\newpage
+Figure \ref{figure6} shows spiked experiments indicating each mean value, mean
+ and standard deviation with a violin plot representation.
+\newline
+```{r message = FALSE, warning = FALSE, fig.cap="Spiked data with mean and standard deviation - Each point represents a mean binding value on a given gene \\label{figure6}", fig.height = 6}
+boxplotSpike(csds, outline = FALSE, violin=TRUE, mean_with_sd = TRUE,
+ jitter = TRUE);
+````
+
+
+## Correlation plots
+
+The plotCor method plots the correlation between ChIP-seq experiments using 
+heatscatter plot or, if heatscatterplot = FALSE, correlation tables. For 
+heatscatter plots, ChIPSeqSpike makes use of the heatscatter function of the 
+package [LSD](https://CRAN.R-project.org/package=LSD) and the corrplot function
+ of the package [corrplot](https://CRAN.R-project.org/package=corrplot) is used
+ to generate correlation tables. This offers a wide range of graphical 
+possibilities for assessing the correlation between experiments and 
+transformation steps (see documentation for more details).
+
+Figure \ref{figure7} shows two correlation table representations between spiked
+ experiments.
+\newline
+```{r message = FALSE, warning = FALSE, fig.cap="Correlation table of spiked data with circle (left) or numbers (right)\\label{figure7}", fig.height = 6, fig.width=10}
+par(mfrow=c(1,2));
+plotCor(csds, heatscatterplot = FALSE);
+plotCor(csds, heatscatterplot = FALSE, method_corrplot = "number");
+````
+
+Figure \ref{figure8} illustrates a heatscatter plot of spiked data after log 
+transformation (only positive mean binding values are kept) and figure 
+\ref{figure9} is the result of running the same code on the whole refseq Hg19 
+gene set.
+\newline
+```{r message = FALSE, warning =  FALSE, fig.cap="Heatscatter of spiked data after log transformation \\label{figure8}", fig.height=6}
+plotCor(csds, method_scale = "log");
+````        
+        
+        
+![Heatscatter of spiked data after log transformation on all Hg19 refseq genes \label{figure9}](/home/descostes/Documents/analysis/packages_development/ChIPSeqSpike/figures_for_presentation/cor_log.pdf)
+          
+          
+          
+```{r message = FALSE, warning = FALSE, include = FALSE}
+unlink("test_chipseqspike/", recursive = TRUE);
+````
+
+# Session info
+
+```{r}
+sessionInfo(package="ChIPSeqSpike");
+````        
+# References
+
+---
+references:
+
+- id: barski2007
+  title: 'High-Resolution Profiling of Histone Methylations in the Human Genome'
+  author:
+  - family: Barski
+    given: Artem
+  - family: Cuddapah
+    given: Suresh
+  - family: Cui
+    given: Kairong
+  - family: Roh
+    given: Tae Young
+  - family: Schones 
+    given: Dustin E
+  - family: Wang
+    given: Zhibin
+  - family: Wei
+    given: Gang
+  - family: Chepelev
+    given: Iouri
+  - family: Zhao
+    given: Keji
+  container-title: Cell
+  volume: 129
+  URL: 'http://dx.doi.org/10.1016/10.1016/j.cell.2007.05.009'
+  DOI: 10.1016/j.cell.2007.05.009
+  issue: 4
+  publisher: Cell press
+  page: 823-837
+  type: article-journal
+  issued:
+    year: 2007
+    month: 5
+
+- id: park2009
+  title: 'ChIP–seq: advantages and challenges of a maturing technology'
+  author:
+  - family: Park
+    given: PJ
+  container-title: Nature Reviews Genetics
+  volume: 10
+  URL: 'http://dx.doi.org/10.1038/nrg2641'
+  DOI: 10.1038/nrg2641
+  issue: 
+  publisher: Nature Publishing Group
+  page: 669-680
+  type: article-journal
+  issued:
+    year: 2009
+    month: 10
+
+- id: bonhoure2014
+  title: 'Quantifying ChIP-seq data: a spiking method providing an internal reference for sample-to-sample normalization'
+  author:
+  - family: Bonhoure
+    given: Nicolas
+  - family: Bounova
+    given: Gergana
+  - family: Bernasconi
+    given: David
+  - family: Praz
+    given: Viviane
+  - family: Lammers
+    given: Fabienne
+  - family: Canella
+    given: Donatella
+  - family: Willis
+    given: Ian M
+  - family: Herr
+    given: Winship
+  - family: Hernandez
+    given: Nouria
+  - family: Delorenzi
+    given: Mauro
+  - family: Consortium
+    given: CycliX
+  container-title: Genome Research
+  volume: 24
+  URL: 'http://dx.doi.org/10.1101/gr.168260.113'
+  DOI: 10.1101/gr.168260.113
+  issue: 
+  publisher: Cold Spring Harbor Press
+  page: 1157-1168
+  type: article-journal
+  issued:
+    year: 2014
+    month: 04
+    
+- id: orlando2014
+  title: 'Quantitative ChIP-seq Normalization reveals global modulation of the Epigenome'
+  author:
+  - family: Orlando
+    given: David A
+  - family: Chen
+    given: Mei Wei
+  - family: Brown
+    given: Victoria E
+  - family: Solanki
+    given: Snehakumari
+  - family: Choi
+    given: Yoon J
+  - family: Olson
+    given: Eric R
+  - family: Fritz
+    given: Christian C
+  - family: Bradner
+    given: James E
+  - family: Guenther
+    given: Matthew G
+  container-title: Cell Reports
+  volume: 9
+  URL: 'http://dx.doi.org/10.1016/j.celrep.2014.10.018'
+  DOI: 10.1016/j.celrep.2014.10.018
+  issue: 3
+  publisher: Cell press
+  page: 1163–1170
+  type: article-journal
+  issued:
+    year: 2014
+    month: 11
+
+- id: trojer2016
+  title: 'An Alternative Approach to ChIP-Seq Normalization Enables Detection of Genome-Wide Changes in Histone H3 Lysine 27 Trimethylation upon EZH2 Inhibition'
+  author:
+  - family: Egan
+    given: Brian
+  - family: Yuan
+    given: Chih Chi
+  - family: Craske
+    given: Madeleine Lisa
+  - family: Labhart
+    given: Paul
+  - family: Guler
+    given: Gulfem D
+  - family: Arnott
+    given: David
+  - family: Maile
+    given: Tobias M
+  - family: Busby
+    given: Jennifer
+  - family: Henry
+    given: Chisato
+  - family: Kelly
+    given: Theresa K
+  - family: Tindell
+    given: Charles A
+  - family: Jhunjhunwala
+    given: Suchit
+  - family: Zhao
+    given: Feng
+  - family: Hatton
+    given: Charlie
+  - family: Bryant
+    given: Barbara M
+  - family: Classon
+    given: Marie
+  - family: Trojer
+    given: Patrick
+  container-title: PLoS ONE
+  volume: 11
+  URL: 'http://dx.doi.org/10.1371/journal.pone.0166438'
+  DOI: 10.1371/journal.pone.0166438
+  issue: 11
+  publisher: PLoS
+  type: article-journal
+  issued:
+    year: 2016
+    month: 11
+
+- id: daigle2013
+  title: 'Potent inhibition of DOT1L as treatment of MLL-fusion leukemia'
+  author:
+  - family: Daigle
+    given: SR
+  - family: Olhava
+    given: EJ
+  - family: Therkelsen
+    given: CA
+  - family: Basavapathruni
+    given: A
+  - family: Jin
+    given: L
+  - family: Boriack-Sjodin
+    given: PA
+  - family: Allain
+    given: CJ
+  - family: Klaus
+    given: CR
+  - family: Raimondi
+    given: A
+  - family: Scott
+    given: MP
+  - family: Waters
+    given: NJ
+  - family: Cheswort
+    given: R
+  - family: Moyer
+    given: MP
+  - family: Copeland
+    given: RA
+  - family: Richon
+    given: VM
+  - family: Pollock
+    given: RM
+  container-title: Blood
+  volume: 122
+  URL: 'http://dx.doi.org/10.1182/blood-2013-04-497644'
+  DOI: 10.1182/blood-2013-04-497644
+  issue: 6
+  publisher: American Society of Hematology
+  page: 1017-1025
+  type: article-journal
+  issued:
+    year: 2013
+    month: 8
+    
+- id: ngsqctoolkit
+  title: 'NGS QC toolkit: A toolkit for quality control of next generation sequencing data'
+  author:
+  - family: Patel
+    given: Ravi K
+  - family: Jain
+    given: Mukesh
+  container-title: PLoS ONE
+  volume: 7
+  URL: 'http://dx.doi.org/10.1371/journal.pone.0030619'
+  DOI: 10.1371/journal.pone.0030619
+  issue: 2
+  publisher: PLoS
+  type: article-journal
+  issued:
+    year: 2012
+    month: 2
+
+- id: bowtie2
+  title: 'Fast gapped-read alignment with Bowtie 2'
+  author:
+  - family: Langmead
+    given: Ben
+  - family: Salzberg
+    given: Steven L
+  container-title: Nature Method
+  volume: 9
+  URL: 'http://dx.doi.org/10.1038/nmeth.1923'
+  DOI: 10.1038/nmeth.1923.
+  issue: 4
+  publisher: Nature Publishing Group
+  type: article-journal
+  issued:
+    year: 2012
+    month: 3
+
+- id: samtools
+  title: 'The Sequence Alignment/Map format and SAMtools'
+  author:
+  - family: Li
+    given: Heng
+  - family: Handsaker
+    given: Bob
+  - family: Wysoker
+    given: Alec
+  - family: Fennell
+    given: Tim
+  - family: Ruan
+    given: Jue
+  - family: Homer
+    given: Nils
+  - family: Marth
+    given: Gabor
+  - family: Abecasis
+    given: Goncalo
+  - family: Durbin
+    given: Richard
+  container-title: Bioinformatics
+  volume: 25
+  URL: 'http://dx.doi.org/10.1093/bioinformatics/btp352'
+  DOI: 10.1093/bioinformatics/btp352
+  issue: 16
+  publisher: Oxford Academic
+  type: article-journal
+  issued:
+    year: 2009
+    month: 8
+
+- id: pasha
+  title: 'Pasha a versatile R package for piling chromatin HTS data'
+  author:
+  - family: Fenouil
+    given: Romain
+  - family: Descostes
+    given: Nicolas
+  - family: Spinelli
+    given: Lionel
+  - family: Koch
+    given: Frederic
+  - family: Maqbool
+    given: Muhammad A
+  - family:  Benoukraf
+    given: Touati
+  - family: Cauchy
+    given: Pierre
+  - family: Innocenti
+    given: Charlene
+  - family: Ferrier
+    given: Pierre
+  - family: Andrau
+    given: Jean-Christophe
+  container-title: Bioinformatics
+  volume: 25
+  URL: 'http://dx.doi.org/10.1093/bioinformatics/btp352'
+  DOI: 10.1093/bioinformatics/btp352
+  issue: 16
+  publisher: Oxford Academic
+  type: article-journal
+  issued:
+    year: 2009
+    month: 8
+
+- id: seqplots
+  title: 'SeqPlots - Interactive software for exploratory data analyses, pattern discovery and visualization in genomics'
+  author:
+  - family: Stempor
+    given: Przemyslaw
+  - family: Ahringer
+    given: Julie
+  container-title: Wellcome Open Research
+  volume: 1
+  URL: 'http://dx.doi.org/10.12688/wellcomeopenres.10004.1'
+  DOI: 10.12688/wellcomeopenres.10004.1
+  issue: 
+  publisher: 
+  type: article-journal
+  issued:
+    year: 2016
+    month: 11
+
+---

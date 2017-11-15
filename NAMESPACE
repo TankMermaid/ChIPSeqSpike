@@ -1,0 +1,83 @@
+##########################
+## Export classes
+##########################
+
+exportClasses(ChIPSeqSpikeDataset, ChIPSeqSpikeDatasetBoost, 
+ChIPSeqSpikeDatasetList, ChIPSeqSpikeDatasetListBoost, Experiment, 
+ExperimentLoaded);
+
+
+##########################
+## Export functions and constructors
+##########################
+
+export(ChIPSeqSpikeDataset, ChIPSeqSpikeDatasetBoost, spikeDataset, spikePipe,
+       Experiment, ExperimentLoaded);
+
+
+##########################
+## Export methods
+##########################
+
+## Getters and setters
+
+exportMethods(getBam, getBigWigFile, getExperimentList, getExpName, 
+              getScalingFactor, getExogenousScalingFactor, getCount, 
+              getExoCount, getAverageBindingValues, getMatBindingValues, 
+              getLoadedData, getExogenousBam, spikeSummary, getRatio, 
+              exportBigWigs, "scalingFactor<-", "exogenousScalingFactor<-", 
+              "count<-", "exoCount<-", "bigWigFile<-", "averageBindingValues<-",
+              "matBindingValues<-");
+
+## Normalization functions
+
+exportMethods(estimateScalingFactors, scaling, inputSubtraction,
+              extractBinding);
+
+## Graphical functions
+
+exportMethods(plotProfile, plotTransform, plotHeatmaps, boxplotSpike, plotCor,
+              exportBigWigs);
+
+
+##########################
+## Import
+##########################
+
+import(S4Vectors);
+
+importFrom(rtracklayer, import, export, path, BigWigFile, summary);
+
+importFrom(tools, file_ext);
+
+importFrom(stringr, str_sub);
+
+importFrom(Rsamtools, countBam, ScanBamParam, scanBamFlag);
+
+importFrom(GenomicRanges, "score<-", score, seqnames, GRanges);
+
+importFrom(IRanges, "%over%", ranges, IRanges);
+
+importFrom(seqplots, getPlotSetArray, plotAverage, plotHeatmap);
+
+importFrom(ggplot2, ggplot, aes_string, geom_violin, scale_colour_manual, 
+           scale_fill_manual, theme_classic, labs, theme, element_rect, 
+           element_text, stat_summary, geom_boxplot, geom_jitter, 
+           position_jitter, mean_sdl);
+
+importFrom(LSD, heatscatter);
+
+importFrom(corrplot, corrplot);
+
+importFrom(stats, median);
+
+importFrom(grDevices, rainbow, boxplot.stats, dev.new);
+
+importFrom(graphics, boxplot.matrix, par, plot.new, legend);
+
+importFrom(utils, combn, read.table, read.csv);
+
+importFrom(methods, new, validObject, callNextMethod);
+
+importFrom(BiocGenerics, strand);
+

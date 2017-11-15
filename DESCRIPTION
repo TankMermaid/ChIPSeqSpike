@@ -1,0 +1,19 @@
+Package: ChIPSeqSpike
+Type: Package
+Title: ChIP-Seq data scaling according to spike-in control 
+Version: 0.99.0
+Date: 2017-10-11
+Author: Nicolas Descostes
+Maintainer: Nicolas Descostes <nicolas.descostes@gmail.com>
+Description: ChIPSeqSpike provides tools for ChIP-Seq spike-in normalization, 
+    assessment and analysis. ChIPSeqSpike provides ready to use scaled bigwig 
+    files as output and methods for graphical analysis.
+License: Artistic-2.0
+Imports: tools, stringr, Rsamtools, GenomicRanges, IRanges, 
+    seqplots, ggplot2, LSD, corrplot, methods, stats, grDevices, graphics, 
+    utils, BiocGenerics, S4Vectors
+VignetteBuilder: knitr
+Suggests: BiocStyle, knitr, rmarkdown, testthat
+Depends:  R (>= 3.5), rtracklayer (>= 1.37.6)
+biocViews: ChIPSeq, Sequencing, Normalization, Transcription, Coverage, 
+           DifferentialMethylation, Epigenetics, DataImport
