@@ -375,7 +375,7 @@ plotHeatmaps(csds, nb_of_groups = 2, clustering_method = "kmeans");
 Figure \ref{figure4} illustrates a clustering by decreasing values on the whole
  dataset.
 
-![Spiked data organized by decreasing values at start position of all refseq Hg19 genes \label{figure4}](/home/descostes/Documents/analysis/packages_development/ChIPSeqSpike/figures_for_presentation/heatmaps_start-2.png)
+![Spiked data organized by decreasing values at start position of all refseq Hg19 genes \label{figure4}](heatmaps_start-2.png)
 
 
 ## Boxplots
@@ -432,7 +432,7 @@ plotCor(csds, method_scale = "log");
 ````        
         
         
-![Heatscatter of spiked data after log transformation on all Hg19 refseq genes \label{figure9}](/home/descostes/Documents/analysis/packages_development/ChIPSeqSpike/figures_for_presentation/cor_log.pdf)
+![Heatscatter of spiked data after log transformation on all Hg19 refseq genes \label{figure9}](cor_log.pdf)
           
           
           
