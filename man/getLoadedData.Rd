@@ -52,9 +52,9 @@ csds <- ChIPSeqSpikeDatasetBoost(endogenousBam_vec = file_vec[2],
                          bigWigFile_endogenous_vec = file_vec[3], 
                          inputBigWigFile = file_vec[4], 
                          inputBamFile = file_vec[5], 
-                         expnames = "H3K79me2_0");
+                         expnames = "H3K79me2_0")
 
-getLoadedData(csds);
+getLoadedData(csds)
 }
 
 \author{Nicolas Descostes}

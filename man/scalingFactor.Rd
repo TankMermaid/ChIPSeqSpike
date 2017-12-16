@@ -59,32 +59,32 @@ scalingFactor(theObject) <- value
 }
 
 \examples{
-info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike");
-bam_path <- system.file("extdata/bam_files", package="ChIPSeqSpike");
-bigwig_path <- system.file("extdata/bigwig_files", package="ChIPSeqSpike");
-gff_vec <- system.file("extdata/test_coord.gff", package="ChIPSeqSpike");
-genome_name <- "hg19";
-output_folder <- "test_chipseqspike";
+info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike")
+bam_path <- system.file("extdata/bam_files", package="ChIPSeqSpike")
+bigwig_path <- system.file("extdata/bigwig_files", package="ChIPSeqSpike")
+gff_vec <- system.file("extdata/test_coord.gff", package="ChIPSeqSpike")
+genome_name <- "hg19"
+output_folder <- "test_chipseqspike"
 bigwig_files <- system.file("extdata/bigwig_files", 
                             c("H3K79me2_0-filtered.bw",
                               "H3K79me2_100-filtered.bw",
                               "H3K79me2_50-filtered.bw",
                               "input_0-filtered.bw",
                               "input_100-filtered.bw",
-                              "input_50-filtered.bw"), package="ChIPSeqSpike");
+                              "input_50-filtered.bw"), package="ChIPSeqSpike")
 
 ## Copying example files
-dir.create("./test_chipseqspike");
-result <- file.copy(bigwig_files, "test_chipseqspike");
+dir.create("./test_chipseqspike")
+result <- file.copy(bigwig_files, "test_chipseqspike")
 
 csds <- spikePipe(info_file_csv, bam_path, bigwig_path, gff_vec, genome_name, 
-              verbose = TRUE, outputFolder = output_folder);
+              verbose = TRUE, outputFolder = output_folder)
 
-getScalingFactor(csds[[1]][[1]]);
-scalingFactor(csds[[1]][[1]]) <- 15;
-getScalingFactor(csds[[1]][[1]]);
+getScalingFactor(csds[[1]][[1]])
+scalingFactor(csds[[1]][[1]]) <- 15
+getScalingFactor(csds[[1]][[1]])
 
-unlink("test_chipseqspike/", recursive = TRUE);
+unlink("test_chipseqspike/", recursive = TRUE)
 }
 
 \seealso{

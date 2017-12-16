@@ -50,8 +50,8 @@ getBam(theObject)
 }
 
 \examples{
-data(result_extractBinding);
-getBam(csds[[1]]);
+data(result_extractBinding)
+getBam(csds[[1]])
 }
 
 \seealso{

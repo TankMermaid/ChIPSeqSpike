@@ -126,7 +126,7 @@ file_vec <- system.file("extdata",
 exp <- ExperimentLoaded(endogenousBamFilePath = file_vec[2], 
                         exogenousBamFilePath = file_vec[1], 
                         bigWigFilePath = file_vec[3], 
-                        name = "H3K79me2_0");
+                        name = "H3K79me2_0")
 }
 
 \seealso{

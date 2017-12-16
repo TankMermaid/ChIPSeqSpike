@@ -19,14 +19,14 @@ ChIPSeqSpikeCore <- setClass(
         
         validity = function(object){
             
-            .validatePath(object@inputBam);
-            .validatePath(object@inputBigWig);
-            .validateBigWig(object@inputBigWig);
-            .validateSFAndCount(object@inputScalingFactor);
-            .validateSFAndCount(object@inputCount);
-            .validatePlotSetArrayList(object@plotSetArrayList);
-            .validateMatBindingValList(object@matBindingValList);
-        });
+            .validatePath(object@inputBam)
+            .validatePath(object@inputBigWig)
+            .validateBigWig(object@inputBigWig)
+            .validateSFAndCount(object@inputScalingFactor)
+            .validateSFAndCount(object@inputCount)
+            .validatePlotSetArrayList(object@plotSetArrayList)
+            .validateMatBindingValList(object@matBindingValList)
+        })
 
 
 ## The ChIPSeqSpikeDatasetList class intend to handle the case where different
@@ -44,12 +44,13 @@ ChIPSeqSpikeDatasetList <- setClass(
             
             if(length(object@datasetList) < 1)
                 stop("must contain at least one ChIPSeqSpikeDataset object.")
-            else if(!all(sapply(object@datasetList, function(x) 
-                                inherits(x, "ChIPSeqSpikeDataset"))))
+            else if(!all(vapply(object@datasetList, function(x) 
+                                inherits(x, "ChIPSeqSpikeDataset"), logical(1))
+            ))
                stop("all objects in list must be of ChIPSeqSpikeDataset", 
-                       " type.");
+                       " type.")
             
-        });
+        })
 
 
 ## The ChIPSeqSpikeDataset class inherits from ChIPSeqSpikeCore and adds a list
@@ -69,11 +70,11 @@ ChIPSeqSpikeDataset <- setClass(
             
             if(length(object@experimentList) < 1)
                 stop("must contain at least one Experiment object.")
-            else if(!all(sapply(object@experimentList, function(x) 
-                                inherits(x, "Experiment"))))
-                stop("all objects in list must be of Experiment type.");
+            else if(!all(vapply(object@experimentList, function(x) 
+                                inherits(x, "Experiment"), logical(1))))
+                stop("all objects in list must be of Experiment type.")
             
-        });
+        })
 
 
 ## The ChIPSeqSpikeDatasetListBoost class intend to handle the case where 
@@ -93,12 +94,13 @@ ChIPSeqSpikeDatasetListBoost <- setClass(
             if(length(object@datasetList) < 1)
               stop("must contain at least one ChIPSeqSpikeDatasetBoost ",
                       "object.")
-            else if(!all(sapply(object@datasetList, function(x) 
-                                inherits(x, "ChIPSeqSpikeDatasetBoost"))))
+            else if(!all(vapply(object@datasetList, function(x) 
+                                inherits(x, "ChIPSeqSpikeDatasetBoost"), 
+                            logical(1))))
           stop("all objects in list must be of ChIPSeqSpikeDatasetBoost ",
-                  "type.");
+                  "type.")
             
-        });
+        })
 
 
 ## The ChIPSeqSpikeDatasetBoost class inherits from the ChIPSeqSpikeCore 
@@ -120,10 +122,10 @@ ChIPSeqSpikeDatasetBoost <- setClass(
             
             if(length(object@experimentListLoaded) < 1)
                 stop("Must contain at least one ExperimentLoaded object.")
-            else if(!all(sapply(object@experimentListLoaded, function(x) 
-                                inherits(x, "ExperimentLoaded"))))
-                stop("All objects in list must be of ExperimentLoaded type.");
-        });
+            else if(!all(vapply(object@experimentListLoaded, function(x) 
+                                inherits(x, "ExperimentLoaded"), logical(1))))
+                stop("All objects in list must be of ExperimentLoaded type.")
+        })
 
 
 ## This class defines the Experiment object which is the basis of the analysis.
@@ -152,60 +154,61 @@ Experiment <- setClass(
         
         validity = function(object){
             
-            .validatePath(object@endogenousBam);
-            .validatePath(object@exogenousBam);
-            .validatePath(object@bigWigFile);
-            .validateBigWig(object@bigWigFile);
+            .validatePath(object@endogenousBam)
+            .validatePath(object@exogenousBam)
+            .validatePath(object@bigWigFile)
+            .validateBigWig(object@bigWigFile)
             
-            .validateSFAndCount(object@endogenousScalingFactor);
-            .validateSFAndCount(object@exogenousScalingFactor);
-            .validateSFAndCount(object@endoCount);
-            .validateSFAndCount(object@exoCount);
+            .validateSFAndCount(object@endogenousScalingFactor)
+            .validateSFAndCount(object@exogenousScalingFactor)
+            .validateSFAndCount(object@endoCount)
+            .validateSFAndCount(object@exoCount)
         }
-);
+)
 
 
 
 .validatePath <- function(value){
     
     if(!file.exists(value))
-        stop(value, " is not a valid path");
+        stop(value, " is not a valid path")
     
     if(length(gregexpr(pattern="\\.", basename(value))[[1]]) > 1)
-        stop(value, " should contain only one point for the extension.");
+        stop(value, " should contain only one point for the extension.")
     
-};
+}
 
 .validateSFAndCount <- function(value){
     
     if(!identical(value, numeric(0)) && value < 0)
-        stop(deparse(substitute(value)), " should be a positive number or 0.");
+        stop(deparse(substitute(value)), " should be a positive number or 0.")
     
-};
+}
 
 .validateBigWig <- function(value){
     
-    extension <- strsplit(basename(value), "\\.")[[1]][2];
+    extension <- strsplit(basename(value), "\\.")[[1]][2]
     
     if(!identical(extension, "bw"))
         stop("Wig files should be in bigWig format.")
-};
+}
 
 .validatePlotSetArrayList <- function(value){
     
     if(length(value)){
         
-        if(!all(sapply(value, function(x)inherits(x, "PlotSetArray"))))
-            stop("All objects in setArray list must be of type PlotSetArray.");
+        if(!all(vapply(value, function(x)inherits(x, "PlotSetArray"), 
+                        logical(1))))
+            stop("All objects in setArray list must be of type PlotSetArray.")
     }
-};
+}
 
 .validateMatBindingValList <- function(value){
     
     if(length(value))
-        if(!all(sapply(value, function(x) inherits(x, "matrix"))))
+        if(!all(vapply(value, function(x) inherits(x, "matrix"), logical(1))))
             stop("All objects in matBindingValList must be of type matrix.")
-};
+}
 
 ## The ExperimentLoaded class inherits from Experiment. It just adds the loaded
 ## values in the form of a GRanges object.
@@ -216,4 +219,4 @@ ExperimentLoaded <- setClass(
         
         slots = c(loadedBigWigFile = "GRanges"),
         
-        contains = "Experiment");
+        contains = "Experiment")

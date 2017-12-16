@@ -1,35 +1,32 @@
 \docType{methods}
-\name{averageBindingValues}
-\alias{averageBindingValues}
-\alias{averageBindingValues<-}
-\alias{averageBindingValues<-,ChIPSeqSpikeDataset-method}
-\alias{averageBindingValues<-,ChIPSeqSpikeDatasetBoost-method}
-\alias{averageBindingValues<-,ChIPSeqSpikeCore-method}
+\name{experimentList}
+\alias{experimentList}
+\alias{experimentList<-}
+\alias{experimentList<-,ChIPSeqSpikeDataset-method}
+\alias{experimentList<-,ChIPSeqSpikeDatasetBoost-method}
 
 
-\title{Set the binding values used to perform profiles and heatmaps}
+\title{Set the list of Experiment and ExperimentLoaded objects}
 
 \description{
-    Set a plotSetArray object to the plotSetArrayList slot of the given object.
+    Set the list of Experiment and ExperimentLoaded objects to the 
+    ChIPSeqSpikeDataset or ChIPSeqSpikeDatasetBoost object
 }
 
 \usage{
-averageBindingValues(theObject) <- value
+experimentList(theObject) <- value
             
             
-\S4method{averageBindingValues}{ChIPSeqSpikeDataset}(theObject) <- value
+\S4method{experimentList}{ChIPSeqSpikeDataset}(theObject) <- value
 
-\S4method{averageBindingValues}{ChIPSeqSpikeDatasetBoost}(theObject) <- value
-
-\S4method{averageBindingValues}{ChIPSeqSpikeCore}(theObject) <- value
+\S4method{experimentList}{ChIPSeqSpikeDatasetBoost}(theObject) <- value
 }
 
 \arguments{
-    \item{theObject}{A \code{ChIPSeqSpikeDataset}, 
-                     \code{ChIPSeqSpikeDatasetBoost} or \code{ChIPSeqSpikeCore}
-                      object}
+    \item{theObject}{A ChIPSeqSpikeDataset or ChIPSeqSpikeDatasetBoost 
+    object}
  
-    \item{value}{A \code{PlotSetArray} object}
+    \item{value}{A list of Experiment and ExperimentLoaded objects}
 }
 
 \value{
@@ -58,17 +55,14 @@ result <- file.copy(bigwig_files, "test_chipseqspike")
 csds <- spikePipe(info_file_csv, bam_path, bigwig_path, gff_vec, genome_name, 
               verbose = TRUE, outputFolder = output_folder)
 
-test <- getAverageBindingValues(csds[[1]])
-averageBindingValues(csds[[1]]) <- test
+experimentList(csds[[1]]) <- getExperimentList(csds[[1]])
 
 unlink("test_chipseqspike/", recursive = TRUE)
+
 }
 
 \seealso{
-    \code{\link{plotProfile}}
-    \code{\link{plotTransform}}
-    \code{\link{plotHeatmaps}}
-    \code{\link[seqplots]{PlotSetArray}}
+    \code{\link{getExperimentList}}
 }
 
 \author{Nicolas Descostes}

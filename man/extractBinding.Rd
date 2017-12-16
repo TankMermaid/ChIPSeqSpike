@@ -133,36 +133,36 @@ interpolation is defined by the interpolation_average parameter.
 \examples{
 
 ## Mock example on a restricted number of reads
-info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike");
-bam_path <- system.file(c("extdata/bam_files"), package="ChIPSeqSpike");
-bigwig_path <- system.file(c("extdata/bigwig_files"), package="ChIPSeqSpike");
-gff_vec <- system.file("extdata/test_coord.gff", package="ChIPSeqSpike");
-genome_name <- "hg19";
+info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike")
+bam_path <- system.file(c("extdata/bam_files"), package="ChIPSeqSpike")
+bigwig_path <- system.file(c("extdata/bigwig_files"), package="ChIPSeqSpike")
+gff_vec <- system.file("extdata/test_coord.gff", package="ChIPSeqSpike")
+genome_name <- "hg19"
 
 csds <- spikeDataset(infoFile = info_file_csv, bamPath = bam_path, 
-                     bigWigPath = bigwig_path);
+                     bigWigPath = bigwig_path)
 
 ## Copying test files to the current folder
-originalBW_vec <- as.character(getBigWigFile(csds));
-dir.create("./test_chipseqspike");
-result <- file.copy(originalBW_vec, "test_chipseqspike");
+originalBW_vec <- as.character(getBigWigFile(csds))
+dir.create("./test_chipseqspike")
+result <- file.copy(originalBW_vec, "test_chipseqspike")
 
-csds <- estimateScalingFactors(csds);
+csds <- estimateScalingFactors(csds)
 
 ## Apply RPM scaling
-csds <- scaling(csds, outputFolder = "test_chipseqspike");
+csds <- scaling(csds, outputFolder = "test_chipseqspike")
 
 ## Perform input subtraction
-csds <- inputSubtraction(csds);
+csds <- inputSubtraction(csds)
 
 ## Reverse RPM scaling after input subtraction
-csds <- scaling(csds, reverse = TRUE);
+csds <- scaling(csds, reverse = TRUE)
 
 ## Apply exogenous scaling factors
-csds <- scaling(csds, type = "exo");
+csds <- scaling(csds, type = "exo")
 
 ## Extract binding values
-csds <- extractBinding(csds, gff_vec, genome_name);
+csds <- extractBinding(csds, gff_vec, genome_name)
 
 ## Delete all files generated in this example
 unlink("test_chipseqspike/", recursive = TRUE)

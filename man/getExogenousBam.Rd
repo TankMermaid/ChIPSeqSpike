@@ -31,8 +31,8 @@ getExogenousBam(theObject)
 }
 
 \examples{
-data(result_extractBinding);
-getExogenousBam(csds[[1]][[1]]);
+data(result_extractBinding)
+getExogenousBam(csds[[1]][[1]])
 }
 
 \seealso{

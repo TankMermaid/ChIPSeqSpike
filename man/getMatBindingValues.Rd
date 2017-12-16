@@ -34,8 +34,8 @@ getMatBindingValues(theObject)
 }
 
 \examples{
-data(result_extractBinding);
-getMatBindingValues(csds[[1]]);
+data(result_extractBinding)
+getMatBindingValues(csds[[1]])
 }
 
 \seealso{

@@ -5,11 +5,12 @@
 \alias{getExperimentList,ChIPSeqSpikeDatasetBoost-method}
 
 
-\title{Get all paths to the bigwig files associated with a dataset}
+\title{Get all Experiment or ExperimentLoaded objects associated with a 
+dataset}
 
 \description{
-    Accesses and returns all paths to the bigwig files associated with a 
-    dataset.
+    Accesses and returns all Experiment or ExperimentLoaded objects associated 
+    with a dataset.
 }
 
 \usage{
@@ -27,12 +28,16 @@ getExperimentList(theObject)
 }
 
 \value{
-  A character vector of all paths to the bigwig files associated with a dataset
+  A list of Experiment or ExperimentLoaded objects
 }
 
 \examples{
-data(result_extractBinding);
-getExperimentList(csds[[1]]);
+data(result_extractBinding)
+getExperimentList(csds[[1]])
+}
+
+\seealso{
+    \code{\link{experimentList}}
 }
 
 \author{Nicolas Descostes}

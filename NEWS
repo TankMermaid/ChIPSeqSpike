@@ -1,1 +1,15 @@
-pre-release version
+########## version 0.99.3:
+
+1) Provide a more exhaustive description of the package in the DESCRIPTION 
+file.
+2) Use seq_len instead of 1:length, 1:nrow() or 1:ncol()
+3) use stop instead of warning + return
+4) modify .retrieveAverageValuesList and .retrieveMatBindingList to avoid 
+declaring an empty list.
+5) Remove <<- in different functions
+6) remove stop(paste0 form
+7) Replace sapply by vapply
+8) use accessors instead of @
+9) remove semi-colons from code
+10) add signature = "theObject" to generics
+11) In plotHeatmaps, put default value of raster_value to FALSE

@@ -18,29 +18,29 @@
                 transformType = "spiked", legend = TRUE, plot_scale = "no",
                 sort_rows = "decreasing", nb_of_groups = 1, 
                 clustering_method = "none", include_exp_vec = NULL, 
-                auto_scale = FALSE, raster_value = TRUE, col_value = "blue",
+                auto_scale = FALSE, raster_value = FALSE, col_value = "blue",
                 ...)
 
 \S4method{plotHeatmaps}{ChIPSeqSpikeDataset}(theObject, location = "start", 
 transformType = "spiked", legend = TRUE, plot_scale = "no", sort_rows = 
 "decreasing", nb_of_groups = 1, clustering_method = "none", include_exp_vec = 
-NULL, auto_scale = FALSE, raster_value = TRUE, col_value = "blue", ...)
+NULL, auto_scale = FALSE, raster_value = FALSE, col_value = "blue", ...)
 
 \S4method{plotHeatmaps}{ChIPSeqSpikeDatasetBoost}(theObject, location = 
 "start", transformType = "spiked", legend = TRUE, plot_scale = "no", 
 sort_rows = "decreasing", nb_of_groups = 1, clustering_method = "none", 
-include_exp_vec = NULL, auto_scale = FALSE, raster_value = TRUE, 
+include_exp_vec = NULL, auto_scale = FALSE, raster_value = FALSE, 
 col_value = "blue", ...)
 
 \S4method{plotHeatmaps}{ChIPSeqSpikeDatasetList}(theObject, location = "start",
 transformType = "spiked", legend = TRUE, plot_scale = "no", sort_rows = 
 "decreasing", nb_of_groups = 1, clustering_method = "none", include_exp_vec = 
-NULL, auto_scale = FALSE, raster_value = TRUE, col_value = "blue", ...)
+NULL, auto_scale = FALSE, raster_value = FALSE, col_value = "blue", ...)
 
 \S4method{plotHeatmaps}{ChIPSeqSpikeDatasetListBoost}(theObject, location = 
 "start", transformType = "spiked", legend = TRUE, plot_scale = "no", 
 sort_rows = "decreasing", nb_of_groups = 1, clustering_method = "none", 
-include_exp_vec = NULL, auto_scale = FALSE, raster_value = TRUE, 
+include_exp_vec = NULL, auto_scale = FALSE, raster_value = FALSE, 
 col_value = "blue", ...)
 }
 
@@ -129,16 +129,16 @@ boost mode (see ?spikePipe for details on what these steps are).
 }}
 
 \examples{
-data("result_extractBinding");
+data("result_extractBinding")
 
 ## Spiked data in decreasing order
-plotHeatmaps(csds);
+plotHeatmaps(csds)
 
 ## Raw data in decreasing order
-plotHeatmaps(csds, transformType = "raw");
+plotHeatmaps(csds, transformType = "raw")
 
 ## K-means clustering with 3 groups
-plotHeatmaps(csds, nb_of_groups = 3, clustering_method = "kmeans");
+plotHeatmaps(csds, nb_of_groups = 3, clustering_method = "kmeans")
 }
 
 \seealso{

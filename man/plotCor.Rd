@@ -156,18 +156,18 @@ boost mode (see ?spikePipe for details on what these steps are).
 
 \examples{
 ## Sub-sample
-data("result_extractBinding");
+data("result_extractBinding")
 
 ## Heatscatter of spiked data using Spearman correlation
 plotCor(csds)
 
 ## Pearson correlation of log transformed raw data
 plotCor(csds,  rawFile = TRUE, spiked = FALSE,  main = "heatscatter",  
-method_cor = "pearson", method_scale = "log");
+method_cor = "pearson", method_scale = "log")
  
 ## Correlation table of all transformation steps with circle representation
 plotCor(csds, rawFile = TRUE, rpmFile = TRUE, bgsubFile = TRUE, revFile = TRUE,
- spiked = TRUE, heatscatterplot = FALSE, verbose = TRUE);
+ spiked = TRUE, heatscatterplot = FALSE, verbose = TRUE)
  
 ## Correlation table of all transformation steps with number representation
 plotCor(csds, rawFile = TRUE, rpmFile = TRUE, bgsubFile = TRUE, revFile = TRUE,

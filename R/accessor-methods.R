@@ -1,4 +1,4 @@
-## Methods to access slots from Experiment objects
+## Methods to access slots
 
 setMethod(
         
@@ -8,8 +8,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@endogenousBam);
-        });
+            return(theObject@endogenousBam)
+        })
 
 
 setMethod(
@@ -20,8 +20,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -32,8 +32,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@inputBam);
-        });
+            return(theObject@inputBam)
+        })
 
 
 setMethod(
@@ -44,8 +44,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -56,8 +56,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -68,8 +68,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@exogenousBam);
-        });
+            return(theObject@exogenousBam)
+        })
 
 
 setMethod(
@@ -80,8 +80,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@bigWigFile);
-        });
+            return(theObject@bigWigFile)
+        })
 
 
 setMethod(
@@ -92,8 +92,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -104,8 +104,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@inputBigWig);
-        });
+            return(theObject@inputBigWig)
+        })
 
 
 setMethod(
@@ -116,8 +116,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -128,8 +128,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -143,50 +143,50 @@ setMethod(
             bigwig_vec <- unlist(lapply(theObject@datasetList, 
                     function(dataset){
                         
-                        bw_vec <- getBigWigFile(dataset);
+                        bw_vec <- getBigWigFile(dataset)
                         bw_vec <- c(bw_vec, unlist(
                                         lapply(dataset@experimentList, 
                                                 function(exp){
-                                                    return(getBigWigFile(exp));
+                                                    return(getBigWigFile(exp))
                                                     }
-                            )));
+                            )))
                         
-                        return(bw_vec);
+                        return(bw_vec)
                         
-                    }));
+                    }))
     
-            return(bigwig_vec);
-        });
+            return(bigwig_vec)
+        })
 
 
 setMethod(
         
-        f = "getExperimentList",
+        f = "getExperimentListBigWigs",
         
         signature = "ChIPSeqSpikeDataset",
         
         definition = function(theObject){
             
             bigWigFiles_vec <- unlist(lapply(theObject@experimentList, 
-                            function(x){return(getBigWigFile(x))}));
+                            function(x){return(getBigWigFile(x))}))
             
-            return(bigWigFiles_vec);
-        });
+            return(bigWigFiles_vec)
+        })
 
 
 setMethod(
         
-        f = "getExperimentList",
+        f = "getExperimentListBigWigs",
         
         signature = "ChIPSeqSpikeDatasetBoost",
         
         definition = function(theObject){
             
             bigWigFiles_vec <- unlist(lapply(theObject@experimentListLoaded, 
-                            function(x){return(getBigWigFile(x))}));
+                            function(x){return(getBigWigFile(x))}))
             
-            return(bigWigFiles_vec);
-        });
+            return(bigWigFiles_vec)
+        })
 
 
 setMethod(
@@ -197,8 +197,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@expName);
-        });
+            return(theObject@expName)
+        })
 
 
 setMethod(
@@ -210,10 +210,10 @@ setMethod(
         definition = function(theObject){
             
             result <- unlist(lapply(theObject@experimentList, function(exp){
-                                return(getExpName(exp));
-                            }));
-            return(as.character(result));
-        });
+                                return(getExpName(exp))
+                            }))
+            return(as.character(result))
+        })
 
 
 setMethod(
@@ -226,10 +226,10 @@ setMethod(
             
             result <- unlist(lapply(theObject@experimentListLoaded, 
                             function(exp){
-                                return(getExpName(exp));
-                            }));
-            return(as.character(result));
-        });
+                                return(getExpName(exp))
+                            }))
+            return(as.character(result))
+        })
 
 
 setMethod(
@@ -240,8 +240,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -252,8 +252,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@endogenousScalingFactor);
-        });
+            return(theObject@endogenousScalingFactor)
+        })
 
 
 setMethod(
@@ -264,8 +264,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -276,8 +276,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@inputScalingFactor);
-        });
+            return(theObject@inputScalingFactor)
+        })
 
 setMethod(
         
@@ -287,8 +287,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 setMethod(
         
@@ -298,8 +298,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 
@@ -311,8 +311,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@exogenousScalingFactor);
-        });
+            return(theObject@exogenousScalingFactor)
+        })
 
 
 setMethod(
@@ -323,8 +323,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -335,8 +335,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@endoCount);
-        });
+            return(theObject@endoCount)
+        })
 
 
 setMethod(
@@ -347,8 +347,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -359,8 +359,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@inputCount);
-        });
+            return(theObject@inputCount)
+        })
 
 setMethod(
         
@@ -370,8 +370,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 setMethod(
         
@@ -381,8 +381,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -393,8 +393,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@exoCount);
-        });
+            return(theObject@exoCount)
+        })
 
 
 setMethod(
@@ -405,8 +405,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -417,8 +417,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@plotSetArrayList);
-        });
+            return(theObject@plotSetArrayList)
+        })
 
 
 setMethod(
@@ -429,8 +429,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -441,8 +441,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -453,8 +453,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@matBindingValList);
-        });
+            return(theObject@matBindingValList)
+        })
 
 
 setMethod(
@@ -465,8 +465,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -477,8 +477,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 
 setMethod(
@@ -489,8 +489,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@inputBigWigLoaded);
-        });
+            return(theObject@inputBigWigLoaded)
+        })
 
 
 setMethod(
@@ -501,8 +501,56 @@ setMethod(
         
         definition = function(theObject){
             
-            return(theObject@loadedBigWigFile);
-        });
+            return(theObject@loadedBigWigFile)
+        })
+
+
+setMethod(
+        
+        f = "getDatasetList",
+        
+        signature = "ChIPSeqSpikeDatasetList",
+        
+        definition = function(theObject){
+            
+            return(theObject@datasetList)
+        })
+
+
+setMethod(
+        
+        f = "getDatasetList",
+        
+        signature = "ChIPSeqSpikeDatasetListBoost",
+        
+        definition = function(theObject){
+            
+            return(theObject@datasetList)
+        })
+
+
+setMethod(
+        
+        f = "getExperimentList",
+        
+        signature = "ChIPSeqSpikeDataset",
+        
+        definition = function(theObject){
+            
+            return(theObject@experimentList)
+        })
+
+
+setMethod(
+        
+        f = "getExperimentList",
+        
+        signature = "ChIPSeqSpikeDatasetBoost",
+        
+        definition = function(theObject){
+            
+            return(theObject@experimentListLoaded)
+        })
 
 
 ## Summary of counts and scaling factors of Experiment object
@@ -518,14 +566,14 @@ setMethod(
             result <- matrix(c(getScalingFactor(theObject),
                                getExogenousScalingFactor(theObject),
                                getCount(theObject),
-                               getExoCount(theObject)), nrow=1);
+                               getExoCount(theObject)), nrow=1)
             
-            rownames(result) <- getExpName(theObject);
+            rownames(result) <- getExpName(theObject)
             colnames(result) <- c("endoScalFact", "exoScalFact", 
-                                  "endoCount",    "exoCount");
+                                  "endoCount",    "exoCount")
                           
-            return(result);
-        });
+            return(result)
+        })
 
 
 setMethod(
@@ -536,8 +584,8 @@ setMethod(
         
         definition = function(theObject){
             
-            return(callNextMethod(theObject));
-        });
+            return(callNextMethod(theObject))
+        })
 
 ## Summary of counts and scaling factors of ChIPSeqSpikeDataset
 
@@ -551,15 +599,15 @@ setMethod(
             
             stat_list <- mapply(function(x){
                         
-                        return(spikeSummary(x));
+                        return(spikeSummary(x))
                         
-                    }, theObject@experimentList, SIMPLIFY = FALSE);
+                    }, theObject@experimentList, SIMPLIFY = FALSE)
             
             input <- c(getScalingFactor(theObject), NA, 
-                    getCount(theObject), NA);
+                    getCount(theObject), NA)
             
-            return(rbind(do.call(rbind, stat_list), input));
-        });
+            return(rbind(do.call(rbind, stat_list), input))
+        })
 
 
 ## Summary of counts and scaling factors of ChIPSeqSpikeDatasetList and 
@@ -570,17 +618,17 @@ setMethod(
     
     result <- lapply(theObject@datasetList, function(dataset){
                 
-                return(spikeSummary(dataset));
-            });
+                return(spikeSummary(dataset))
+            })
     
-    return(do.call(rbind, result));
-};
+    return(do.call(rbind, result))
+}
 
 setMethod(f = "spikeSummary",
-        signature = "ChIPSeqSpikeDatasetList", .summaryDatasetList);
+        signature = "ChIPSeqSpikeDatasetList", .summaryDatasetList)
 
 setMethod(f = "spikeSummary",
-        signature = "ChIPSeqSpikeDatasetListBoost", .summaryDatasetList);
+        signature = "ChIPSeqSpikeDatasetListBoost", .summaryDatasetList)
 
 
 ## Summary of counts and scaling factors of ChIPSeqSpikeDatasetBoost
@@ -595,15 +643,15 @@ setMethod(
             
             stat_list <- mapply(function(x){
                         
-                        return(spikeSummary(x));
+                        return(spikeSummary(x))
                         
-                    }, theObject@experimentListLoaded, SIMPLIFY = FALSE);
+                    }, theObject@experimentListLoaded, SIMPLIFY = FALSE)
              
             input <- c(getScalingFactor(theObject), NA, 
-                    getCount(theObject), NA);
+                    getCount(theObject), NA)
             
-            return(rbind(do.call(rbind, stat_list), input));
-        });
+            return(rbind(do.call(rbind, stat_list), input))
+        })
 
 
 ## Checking the endogenous dna ratio
@@ -617,13 +665,13 @@ setMethod(
                     warning(expname, 
                             " contains less than 2% of endogenous dna:",
                             " The scaling might not work.", 
-                            immediate. = TRUE);
+                            immediate. = TRUE)
                 
                 if(ratio > 25)
                     warning(expname, " contains more than ",
-                            "25% of endogenous DNA.", immediate. = TRUE);
-            }, ratio_list, names_vec));
-};
+                            "25% of endogenous DNA.", immediate. = TRUE)
+            }, ratio_list, names_vec))
+}
 
 
 setMethod(
@@ -636,13 +684,13 @@ setMethod(
             
             total_count <- countBam(getBam(theObject), param=ScanBamParam(
                             scanBamFlag(isPaired= FALSE, 
-                                    isUnmappedQuery =NA)))$records;
-            exo_count <- getExoCount(theObject);
+                                    isUnmappedQuery =NA)))$records
+            exo_count <- getExoCount(theObject)
             percent_exo <- round((exo_count*100)/total_count, 
-                    digits=1);
+                    digits=1)
             
-            return(as.numeric(percent_exo));
-        });
+            return(as.numeric(percent_exo))
+        })
 
 
 setMethod(
@@ -653,8 +701,8 @@ setMethod(
         
         definition = function(theObject){
             
-            callNextMethod(theObject);
-        });
+            callNextMethod(theObject)
+        })
 
 
 setMethod(
@@ -667,15 +715,15 @@ setMethod(
             
             ratio_list <- lapply(theObject@experimentList, function(exp){
                         
-                        return(getRatio(exp));
-                    });
+                        return(getRatio(exp))
+                    })
             
-            names_vec <- names(ratio_list);
-            .checkPercentages(ratio_list, names_vec);
-            result <- do.call(rbind, ratio_list);
-            colnames(result) <- c("Percentage Exo");
-            return(result);
-});
+            names_vec <- names(ratio_list)
+            .checkPercentages(ratio_list, names_vec)
+            result <- do.call(rbind, ratio_list)
+            colnames(result) <- c("Percentage Exo")
+            return(result)
+})
 
 
 setMethod(
@@ -688,26 +736,26 @@ setMethod(
             
             ratio_list <- lapply(theObject@experimentListLoaded, function(exp){
                         
-                        return(getRatio(exp));
-                    });
+                        return(getRatio(exp))
+                    })
             
-            names_vec <- names(ratio_list);
-            .checkPercentages(ratio_list, names_vec);
-            result <- do.call(rbind, ratio_list);
-            colnames(result) <- c("Percentage Exo");
-            return(result);
-        });
+            names_vec <- names(ratio_list)
+            .checkPercentages(ratio_list, names_vec)
+            result <- do.call(rbind, ratio_list)
+            colnames(result) <- c("Percentage Exo")
+            return(result)
+        })
 
 
 .callRatio <- function(list_object){
     
     ratioResultList <- lapply(list_object, function(dataset){
                 
-                return(getRatio(dataset));
-            });
+                return(getRatio(dataset))
+            })
     
-    return(do.call(rbind,ratioResultList));
-};
+    return(do.call(rbind,ratioResultList))
+}
 
 
 setMethod(
@@ -719,7 +767,7 @@ setMethod(
         definition = function(theObject){
             
             .callRatio(theObject@datasetList)
-        });
+        })
 
 
 setMethod(
@@ -731,7 +779,7 @@ setMethod(
         definition = function(theObject){
             
             .callRatio(theObject@datasetList)
-        });
+        })
 
 
 ## Export all files for the object obtained in boost mode
@@ -745,20 +793,20 @@ setMethod(
         definition = function(theObject, verbose = TRUE){
             
             if(verbose)
-                message("Exporting RPM scaled input.");
+                message("Exporting RPM scaled input.")
             
             export(getLoadedData(theObject), con = getBigWigFile(theObject), 
-                    format="BigWig");
+                    format="BigWig")
             
             invisible(lapply(theObject@experimentListLoaded, function(exp){
                         
                         if(verbose)
-                            message("Writing spiked ", getExpName(exp));
+                            message("Writing spiked ", getExpName(exp))
                         
              export(getLoadedData(exp), con = getBigWigFile(exp), 
-                                format="BigWig");
-                    }));
-        });
+                                format="BigWig")
+                    }))
+        })
 
 
 setMethod(
@@ -771,6 +819,6 @@ setMethod(
             
             invisible(lapply(theObject@datasetList, function(dataset){
                         
-                        exportBigWigs(dataset, verbose);
-                    }));
-        });
+                        exportBigWigs(dataset, verbose)
+                    }))
+        })

@@ -68,9 +68,9 @@ ChIPSeqSpikeDatasetListBoost objects.
 }}
 
 \examples{
-data("result_extractBinding");
-plotTransform(csds, TRUE);
-plotTransform(csds, TRUE, separateWindows=TRUE);
+data("result_extractBinding")
+plotTransform(csds, TRUE)
+plotTransform(csds, TRUE, separateWindows=TRUE)
 }
 
 \seealso{

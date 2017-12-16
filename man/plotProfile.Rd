@@ -79,10 +79,10 @@ scaling.
 }}
 
 \examples{
-data("result_extractBinding");
-plotProfile(csds);
-plotProfile(csds, TRUE);
-plotProfile(csds, TRUE, notScaled = TRUE);
+data("result_extractBinding")
+plotProfile(csds)
+plotProfile(csds, TRUE)
+plotProfile(csds, TRUE, notScaled = TRUE)
 }
 
 \seealso{

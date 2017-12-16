@@ -28,8 +28,8 @@ getExogenousScalingFactor(theObject)
 }
 
 \examples{
-data(result_extractBinding);
-getExogenousScalingFactor(csds[[1]][[1]]);
+data(result_extractBinding)
+getExogenousScalingFactor(csds[[1]][[1]])
 }
 
 \seealso{

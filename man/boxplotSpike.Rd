@@ -126,13 +126,13 @@ boost mode (see ?spikePipe for details on what these steps are).
 }}
 
 \examples{
-data("result_extractBinding");
-boxplotSpike(csds);
-boxplotSpike(csds, outline = FALSE, violinPlot = TRUE);
+data("result_extractBinding")
+boxplotSpike(csds)
+boxplotSpike(csds, outline = FALSE, violinPlot = TRUE)
 boxplotSpike(csds, outline = FALSE, violinPlot = TRUE, mean = TRUE, jitter = 
-TRUE);
+TRUE)
 boxplotSpike(csds, rawFile = TRUE, rpmFile = TRUE, bgsubFile = TRUE, revFile = 
-TRUE, spiked = TRUE, outline = FALSE, violinPlot = TRUE);
+TRUE, spiked = TRUE, outline = FALSE, violinPlot = TRUE)
 }
 
 \seealso{

@@ -41,8 +41,8 @@ of the 'seqplots' package.
 }
 
 \examples{
-data(result_extractBinding);
-getAverageBindingValues(csds[[1]]);
+data(result_extractBinding)
+getAverageBindingValues(csds[[1]])
 }
 
 \seealso{

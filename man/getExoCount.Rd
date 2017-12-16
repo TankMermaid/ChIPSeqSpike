@@ -30,8 +30,8 @@ getExoCount(theObject)
 }
 
 \examples{
-data(result_extractBinding);
-getExoCount(csds[[1]][[1]]);
+data(result_extractBinding)
+getExoCount(csds[[1]][[1]])
 }
 
 \seealso{

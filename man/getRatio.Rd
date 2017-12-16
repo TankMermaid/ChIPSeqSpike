@@ -69,20 +69,20 @@ notifying to the user[1].
 
 \examples{
 ## Mock example on files samples
-info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike");
-bam_path <- system.file(c("extdata/bam_files"), package="ChIPSeqSpike");
-bigwig_path <- system.file(c("extdata/bigwig_files"), package="ChIPSeqSpike");
-gff_vec <- system.file("extdata/test_coord.gff", package="ChIPSeqSpike");
-genome_name <- "hg19";
+info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike")
+bam_path <- system.file(c("extdata/bam_files"), package="ChIPSeqSpike")
+bigwig_path <- system.file(c("extdata/bigwig_files"), package="ChIPSeqSpike")
+gff_vec <- system.file("extdata/test_coord.gff", package="ChIPSeqSpike")
+genome_name <- "hg19"
 
 csds <- spikeDataset(infoFile = info_file_csv, bamPath = bam_path, 
-                     bigWigPath = bigwig_path);
-csds <- estimateScalingFactors(csds);
-getRatio(csds);
+                     bigWigPath = bigwig_path)
+csds <- estimateScalingFactors(csds)
+getRatio(csds)
 
 ## Results on the complete files
-data("ratio");
-print(ratio);
+data("ratio")
+print(ratio)
 }
 
 \seealso{

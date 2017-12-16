@@ -9,12 +9,12 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            if(!is.numeric(value)) stop("Scaling factor should be numeric.");
+            if(!is.numeric(value)) stop("Scaling factor should be numeric.")
             
-            theObject@endogenousScalingFactor <- value;
-            validObject(theObject);
-            return(theObject);
-        });
+            theObject@endogenousScalingFactor <- value
+            validObject(theObject)
+            return(theObject)
+        })
 
 
 setReplaceMethod(
@@ -25,12 +25,12 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            if(!is.numeric(value)) stop("Scaling factor should be numeric.");
+            if(!is.numeric(value)) stop("Scaling factor should be numeric.")
             
-            theObject@exogenousScalingFactor <- value;
-            validObject(theObject);
-            return(theObject);
-        });
+            theObject@exogenousScalingFactor <- value
+            validObject(theObject)
+            return(theObject)
+        })
 
 
 setReplaceMethod(
@@ -41,12 +41,12 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            if(!is.numeric(value)) stop("Counts should be numeric.");
+            if(!is.numeric(value)) stop("Counts should be numeric.")
             
-            theObject@endoCount <- value;
-            validObject(theObject);
-            return(theObject);
-        });
+            theObject@endoCount <- value
+            validObject(theObject)
+            return(theObject)
+        })
 
 
 setReplaceMethod(
@@ -57,12 +57,12 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            if(!is.numeric(value)) stop("Counts should be numeric.");
+            if(!is.numeric(value)) stop("Counts should be numeric.")
             
-            theObject@exoCount <- value;
-            validObject(theObject);
-            return(theObject);
-        });
+            theObject@exoCount <- value
+            validObject(theObject)
+            return(theObject)
+        })
 
 
 setReplaceMethod(
@@ -73,10 +73,10 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            theObject@bigWigFile <- value;
-            validObject(theObject);
-            return(theObject);
-        });
+            theObject@bigWigFile <- value
+            validObject(theObject)
+            return(theObject)
+        })
 
 
 ## Setters for ExperimentLoaded objects
@@ -90,9 +90,9 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            theObject@bigWigFile <- value;
-            return(theObject);
-        });
+            theObject@bigWigFile <- value
+            return(theObject)
+        })
 
 
 ## Setters for ChIPSeqSpikeCore objects
@@ -106,12 +106,12 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            if(!is.numeric(value)) stop("Scaling factor should be numeric.");
+            if(!is.numeric(value)) stop("Scaling factor should be numeric.")
             
-            theObject@inputScalingFactor <- value;
-            validObject(theObject);
-            return(theObject);
-        });
+            theObject@inputScalingFactor <- value
+            validObject(theObject)
+            return(theObject)
+        })
 
 
 setReplaceMethod(
@@ -122,12 +122,12 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            if(!is.numeric(value)) stop("Counts should be numeric.");
+            if(!is.numeric(value)) stop("Counts should be numeric.")
             
-            theObject@inputCount <- value;
-            validObject(theObject);
-            return(theObject);
-        });
+            theObject@inputCount <- value
+            validObject(theObject)
+            return(theObject)
+        })
 
 
 setReplaceMethod(
@@ -138,10 +138,10 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            theObject@inputBigWig <- value;
-            validObject(theObject);
-            return(theObject);
-        });
+            theObject@inputBigWig <- value
+            validObject(theObject)
+            return(theObject)
+        })
 
 
 setReplaceMethod(
@@ -154,7 +154,7 @@ setReplaceMethod(
             
             if(!inherits(value, "list"))
             {
-                stop("SetArrayList should be of type list.");
+                stop("SetArrayList should be of type list.")
             }
             
             if(!length(value))
@@ -162,10 +162,10 @@ setReplaceMethod(
                 stop("The list of binding values is empty.")
             }
             
-            theObject@plotSetArrayList <- value;
-            validObject(theObject);
-            return(theObject);
-        });
+            theObject@plotSetArrayList <- value
+            validObject(theObject)
+            return(theObject)
+        })
 
 
 setReplaceMethod(
@@ -178,7 +178,7 @@ setReplaceMethod(
             
             if(!inherits(value, "list"))
             {
-                stop("matBinding should be of type list.");
+                stop("matBinding should be of type list.")
             }
             
             if(!length(value))
@@ -186,10 +186,10 @@ setReplaceMethod(
                 stop("The list of binding values is empty.")
             }
             
-            theObject@matBindingValList <- value;
-            validObject(theObject);
-            return(theObject);
-        });
+            theObject@matBindingValList <- value
+            validObject(theObject)
+            return(theObject)
+        })
 
 
 ## Setters for ChIPSeqSpikeDataset object
@@ -203,8 +203,8 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            return(callNextMethod(theObject,value));
-        });
+            return(callNextMethod(theObject,value))
+        })
 
 
 setReplaceMethod(
@@ -215,8 +215,8 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            return(callNextMethod(theObject,value));
-        });
+            return(callNextMethod(theObject,value))
+        })
 
 
 setReplaceMethod(
@@ -227,8 +227,8 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            return(callNextMethod(theObject, value));
-        });
+            return(callNextMethod(theObject, value))
+        })
 
 
 setReplaceMethod(
@@ -239,8 +239,8 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            return(callNextMethod(theObject, value));
-        });
+            return(callNextMethod(theObject, value))
+        })
 
 
 setReplaceMethod(
@@ -251,8 +251,22 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            return(callNextMethod(theObject, value));
-        });
+            return(callNextMethod(theObject, value))
+        })
+
+
+setReplaceMethod(
+        
+        f = "experimentList",
+        
+        signature = "ChIPSeqSpikeDataset",
+        
+        definition = function(theObject, value){
+            
+            theObject@experimentList <- value
+            validObject(theObject)
+            return(theObject)
+        })
 
 
 ## Setters for ChIPSeqSpikeDatasetBoost object
@@ -266,8 +280,8 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            return(callNextMethod(theObject,value));
-        });
+            return(callNextMethod(theObject,value))
+        })
 
 
 setReplaceMethod(
@@ -278,8 +292,8 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            return(callNextMethod(theObject,value));
-        });
+            return(callNextMethod(theObject,value))
+        })
 
 
 setReplaceMethod(
@@ -290,10 +304,10 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            theObject@inputBigWigLoaded <- value;
-            validObject(theObject);
-            return(theObject);
-        });
+            theObject@inputBigWigLoaded <- value
+            validObject(theObject)
+            return(theObject)
+        })
 
 
 setReplaceMethod(
@@ -304,9 +318,9 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            theObject@loadedBigWigFile <- value;
-            return(theObject);
-        });
+            theObject@loadedBigWigFile <- value
+            return(theObject)
+        })
 
 
 setReplaceMethod(
@@ -317,9 +331,9 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            theObject@inputBigWig <- value;
-            return(theObject);
-        });
+            theObject@inputBigWig <- value
+            return(theObject)
+        })
 
 
 setReplaceMethod(
@@ -330,8 +344,8 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            return(callNextMethod(theObject, value));
-        });
+            return(callNextMethod(theObject, value))
+        })
 
 
 setReplaceMethod(
@@ -342,5 +356,52 @@ setReplaceMethod(
         
         definition = function(theObject, value){
             
-            return(callNextMethod(theObject, value));
-        });
+            return(callNextMethod(theObject, value))
+        })
+
+
+setReplaceMethod(
+        
+        f = "experimentList",
+        
+        signature = "ChIPSeqSpikeDatasetBoost",
+        
+        definition = function(theObject, value){
+            
+            theObject@experimentListLoaded <- value
+            return(theObject)
+        })
+
+
+## Setters for ChIPSeqSpikeDatasetList object
+
+
+setReplaceMethod(
+        
+        f = "datasetList",
+        
+        signature = "ChIPSeqSpikeDatasetList",
+        
+        definition = function(theObject, value){
+            
+            theObject@datasetList <- value
+            validObject(theObject)
+            return(theObject)
+        })
+
+
+## Setters for ChIPSeqSpikeDatasetListBoost object
+
+
+setReplaceMethod(
+        
+        f = "datasetList",
+        
+        signature = "ChIPSeqSpikeDatasetListBoost",
+        
+        definition = function(theObject, value){
+            
+            theObject@datasetList <- value
+            validObject(theObject)
+            return(theObject)
+        })

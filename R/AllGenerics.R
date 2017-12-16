@@ -9,9 +9,9 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("getBam");
-            
-        });
+            standardGeneric("getBam")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -20,9 +20,9 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("getExogenousBam");
-            
-        });
+            standardGeneric("getExogenousBam")
+        },
+        signature = "theObject")
 
 setGeneric(
         
@@ -30,18 +30,20 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("getBigWigFile");
-        });
+            standardGeneric("getBigWigFile")
+        },
+        signature = "theObject")
 
 
 setGeneric(
         
-        name = "getExperimentList",
+        name = "getExperimentListBigWigs",
         
         def = function(theObject){
             
-            standardGeneric("getExperimentList");
-        });
+            standardGeneric("getExperimentListBigWigs")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -50,8 +52,9 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("getExpName");
-        });
+            standardGeneric("getExpName")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -60,8 +63,9 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("getScalingFactor");
-        });
+            standardGeneric("getScalingFactor")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -70,8 +74,9 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("getExogenousScalingFactor");
-        });
+            standardGeneric("getExogenousScalingFactor")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -80,8 +85,9 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("getCount");
-        });
+            standardGeneric("getCount")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -90,8 +96,9 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("getExoCount");
-        });
+            standardGeneric("getExoCount")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -100,8 +107,9 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("spikeSummary");
-        });
+            standardGeneric("spikeSummary")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -110,8 +118,9 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("getAverageBindingValues");
-        });
+            standardGeneric("getAverageBindingValues")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -120,8 +129,9 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("getMatBindingValues");
-        });
+            standardGeneric("getMatBindingValues")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -130,8 +140,9 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("getLoadedData");
-        });
+            standardGeneric("getLoadedData")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -140,8 +151,31 @@ setGeneric(
         
         def = function(theObject){
             
-            standardGeneric("getRatio");
-        });
+            standardGeneric("getRatio")
+        },
+        signature = "theObject")
+
+
+setGeneric(
+        
+        name = "getDatasetList",
+        
+        def = function(theObject){
+            
+            standardGeneric("getDatasetList")
+        },
+        signature = "theObject")
+
+
+setGeneric(
+        
+        name = "getExperimentList",
+        
+        def = function(theObject){
+            
+            standardGeneric("getExperimentList")
+        },
+        signature = "theObject")
 
 
 #####################
@@ -155,8 +189,9 @@ setGeneric(
         
         def = function(theObject, value){
             
-            standardGeneric("scalingFactor<-");
-        });
+            standardGeneric("scalingFactor<-")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -165,8 +200,9 @@ setGeneric(
         
         def = function(theObject, value){
             
-            standardGeneric("exogenousScalingFactor<-");
-        });
+            standardGeneric("exogenousScalingFactor<-")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -175,8 +211,9 @@ setGeneric(
         
         def = function(theObject, value){
             
-            standardGeneric("count<-");
-        });
+            standardGeneric("count<-")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -185,8 +222,9 @@ setGeneric(
         
         def = function(theObject, value){
             
-            standardGeneric("exoCount<-");
-        });
+            standardGeneric("exoCount<-")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -195,8 +233,9 @@ setGeneric(
         
         def = function(theObject, value){
             
-            standardGeneric("bigWigFile<-");
-        });
+            standardGeneric("bigWigFile<-")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -205,8 +244,9 @@ setGeneric(
         
         def = function(theObject, value){
             
-            standardGeneric("averageBindingValues<-");
-        });
+            standardGeneric("averageBindingValues<-")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -215,8 +255,9 @@ setGeneric(
         
         def = function(theObject, value){
             
-            standardGeneric("matBindingValues<-");
-        });
+            standardGeneric("matBindingValues<-")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -225,8 +266,31 @@ setGeneric(
         
         def = function(theObject, value){
             
-            standardGeneric("loadedData<-");
-        });
+            standardGeneric("loadedData<-")
+        },
+        signature = "theObject")
+
+
+setGeneric(
+        
+        name = "datasetList<-",
+        
+        def = function(theObject, value){
+            
+            standardGeneric("datasetList<-")
+        },
+        signature = "theObject")
+
+
+setGeneric(
+        
+        name = "experimentList<-",
+        
+        def = function(theObject, value){
+            
+            standardGeneric("experimentList<-")
+        },
+        signature = "theObject")
 
 
 #####################
@@ -241,8 +305,9 @@ setGeneric(
         def = function(theObject, legends = FALSE, colVec = NULL, 
                 notScaled = FALSE){
             
-            standardGeneric("plotProfile");
-        });
+            standardGeneric("plotProfile")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -252,8 +317,9 @@ setGeneric(
         def = function(theObject, legends = FALSE, colVec = NULL, 
                 separateWindows = FALSE){
             
-            standardGeneric("plotTransform");
-        });
+            standardGeneric("plotTransform")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -269,8 +335,9 @@ setGeneric(
                 diag_corrplot = FALSE, separateWindows = FALSE, 
                 verbose = FALSE, ...){
             
-            standardGeneric("plotCor");
-        });
+            standardGeneric("plotCor")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -283,8 +350,9 @@ setGeneric(
                 mean_with_sd = FALSE, mean = FALSE, median = FALSE, 
                 boxplot = FALSE, jitter = FALSE, plot = TRUE, verbose = FALSE){
             
-            standardGeneric("boxplotSpike");
-        });
+            standardGeneric("boxplotSpike")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -295,10 +363,11 @@ setGeneric(
                 legend = TRUE, plot_scale = "no", sort_rows = "decreasing", 
                 nb_of_groups = 1, clustering_method = "none", 
                 include_exp_vec = NULL, auto_scale = FALSE, 
-                raster_value = TRUE, col_value = "blue", ...){
+                raster_value = FALSE, col_value = "blue", ...){
             
-            standardGeneric("plotHeatmaps");
-        });
+            standardGeneric("plotHeatmaps")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -307,8 +376,9 @@ setGeneric(
         
         def = function(theObject, paired = FALSE, verbose = TRUE){
             
-            standardGeneric("estimateScalingFactors");
-        });
+            standardGeneric("estimateScalingFactors")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -318,8 +388,9 @@ setGeneric(
         def = function(theObject, reverse = FALSE, type = "endo", 
                 verbose = TRUE, outputFolder = NULL){
             
-            standardGeneric("scaling");
-        });
+            standardGeneric("scaling")
+        },
+        signature = "theObject")
 
 
 
@@ -329,8 +400,9 @@ setGeneric(
         
         def = function(theObject, verbose = TRUE){
             
-            standardGeneric("inputSubtraction");
-        });
+            standardGeneric("inputSubtraction")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -339,8 +411,9 @@ setGeneric(
         
         def = function(theObject, verbose = TRUE){
             
-            standardGeneric("exportBigWigs");
-        });
+            standardGeneric("exportBigWigs")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -352,8 +425,9 @@ setGeneric(
                 interpolation_number = 100, interpolation_average = 10000, 
                 ignore_strand = FALSE, verbose = FALSE){
             
-            standardGeneric("extractBinding");
-        });
+            standardGeneric("extractBinding")
+        },
+        signature = "theObject")
 
 
 setGeneric(
@@ -362,8 +436,9 @@ setGeneric(
         
         def = function(theObject, ...){
             
-            standardGeneric("buildMeanMatrix");
-        });
+            standardGeneric("buildMeanMatrix")
+        },
+        signature = "theObject")
 
 
 #####################
@@ -378,9 +453,9 @@ setMethod(
         
         definition = function(x, i, j, ...){
             
-            return(x@datasetList[[i]]);
+            return(x@datasetList[[i]])
         }
-);
+)
 
 
 setMethod(
@@ -391,9 +466,9 @@ setMethod(
         
         definition = function(x, i, j, ...){
             
-            return(x@experimentList[[i]]);
+            return(x@experimentList[[i]])
         }
-);
+)
 
 
 setMethod(
@@ -404,9 +479,9 @@ setMethod(
         
         definition = function(x, i, j, ...){
             
-            return(x@datasetList[[i]]);
+            return(x@datasetList[[i]])
         }
-);
+)
 
 
 setMethod(
@@ -417,10 +492,10 @@ setMethod(
         
         definition=function(x, i, j, value) {
             
-            x <- value;
-            return(x);
+            x <- value
+            return(x)
         }
-);
+)
 
 
 setMethod(
@@ -431,10 +506,10 @@ setMethod(
         
         definition=function(x, i, j, value) {
             
-            x@experimentList[[i]] <- value;
-            return(x);
+            x@experimentList[[i]] <- value
+            return(x)
         }
-);
+)
 
 
 setMethod(
@@ -445,7 +520,7 @@ setMethod(
         
         definition=function(x, i, j, value) {
             
-            x@datasetList[[i]] <- value;
-            return(x);
+            x@datasetList[[i]] <- value
+            return(x)
         }
-);
+)

@@ -21,13 +21,14 @@ export(ChIPSeqSpikeDataset, ChIPSeqSpikeDatasetBoost, spikeDataset, spikePipe,
 
 ## Getters and setters
 
-exportMethods(getBam, getBigWigFile, getExperimentList, getExpName, 
+exportMethods(getBam, getBigWigFile, getExperimentListBigWigs, getExpName, 
               getScalingFactor, getExogenousScalingFactor, getCount, 
               getExoCount, getAverageBindingValues, getMatBindingValues, 
               getLoadedData, getExogenousBam, spikeSummary, getRatio, 
-              exportBigWigs, "scalingFactor<-", "exogenousScalingFactor<-", 
-              "count<-", "exoCount<-", "bigWigFile<-", "averageBindingValues<-",
-              "matBindingValues<-");
+              getDatasetList, getExperimentList, exportBigWigs, 
+              "scalingFactor<-", "exogenousScalingFactor<-", "count<-", 
+              "exoCount<-", "bigWigFile<-", "averageBindingValues<-", 
+              "matBindingValues<-", "datasetList<-", "experimentList<-");
 
 ## Normalization functions
 

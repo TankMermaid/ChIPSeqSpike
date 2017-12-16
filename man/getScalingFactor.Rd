@@ -49,8 +49,8 @@ getScalingFactor(theObject)
 }
 
 \examples{
-data(result_extractBinding);
-getScalingFactor(csds[[1]]);
+data(result_extractBinding)
+getScalingFactor(csds[[1]])
 }
 
 \seealso{

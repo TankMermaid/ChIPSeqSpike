@@ -129,33 +129,33 @@ are provided and boost = TRUE.
 }
 
 \examples{
-info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike");
-bam_path <- system.file("extdata/bam_files", package="ChIPSeqSpike");
-bigwig_path <- system.file("extdata/bigwig_files", package="ChIPSeqSpike");
-gff_vec <- system.file("extdata/test_coord.gff", package="ChIPSeqSpike");
-genome_name <- "hg19";
-output_folder <- "test_chipseqspike";
+info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike")
+bam_path <- system.file("extdata/bam_files", package="ChIPSeqSpike")
+bigwig_path <- system.file("extdata/bigwig_files", package="ChIPSeqSpike")
+gff_vec <- system.file("extdata/test_coord.gff", package="ChIPSeqSpike")
+genome_name <- "hg19"
+output_folder <- "test_chipseqspike"
 bigwig_files <- system.file("extdata/bigwig_files", 
                             c("H3K79me2_0-filtered.bw",
                               "H3K79me2_100-filtered.bw",
                               "H3K79me2_50-filtered.bw",
                               "input_0-filtered.bw",
                               "input_100-filtered.bw",
-                              "input_50-filtered.bw"), package="ChIPSeqSpike");
+                              "input_50-filtered.bw"), package="ChIPSeqSpike")
 
 ## Copying example files
-dir.create("./test_chipseqspike");
-result <- file.copy(bigwig_files, "test_chipseqspike");
+dir.create("./test_chipseqspike")
+result <- file.copy(bigwig_files, "test_chipseqspike")
 
 csds <- spikePipe(info_file_csv, bam_path, bigwig_path, gff_vec, genome_name, 
-              verbose = TRUE, outputFolder = output_folder);
+              verbose = TRUE, outputFolder = output_folder)
 
 csds2 <- spikePipe(info_file_csv, bam_path, bigwig_path, gff_vec, genome_name, 
-              boost = TRUE, verbose = TRUE, outputFolder = output_folder);
+              boost = TRUE, verbose = TRUE, outputFolder = output_folder)
 
-unlink("test_chipseqspike/", recursive = TRUE);
-is(csds);
-is(csds2);
+unlink("test_chipseqspike/", recursive = TRUE)
+is(csds)
+is(csds2)
 }
 
 \seealso{

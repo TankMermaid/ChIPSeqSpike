@@ -37,8 +37,8 @@ getExpName(theObject)
 }
 
 \examples{
-data(result_extractBinding);
-getExpName(csds[[1]]);
+data(result_extractBinding)
+getExpName(csds[[1]])
 }
 
 \author{Nicolas Descostes}

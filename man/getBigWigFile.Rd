@@ -55,8 +55,8 @@ getBigWigFile(theObject)
 }
 
 \examples{
-data(result_extractBinding);
-getBigWigFile(csds);
+data(result_extractBinding)
+getBigWigFile(csds)
 }
 
 \author{Nicolas Descostes}

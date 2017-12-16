@@ -1,2 +1,2 @@
-library("testthat");
-library("ChIPSeqSpike");
+library("testthat")
+library("ChIPSeqSpike")

@@ -50,8 +50,8 @@ getCount(theObject)
 }
 
 \examples{
-data(result_extractBinding);
-getCount(csds[[1]]);
+data(result_extractBinding)
+getCount(csds[[1]])
 }
 
 \seealso{

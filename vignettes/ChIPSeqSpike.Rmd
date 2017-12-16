@@ -62,30 +62,30 @@ The following code performs spike-in normalization with a wrapper function on
 data sub-samples. A 'test_chipseq' temporary results folder is also created.  
 \newline
 ```{r message = FALSE, warning = FALSE}
-library("ChIPSeqSpike");
+library("ChIPSeqSpike")
 
 ## Preparing testing data
-info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike");
-bam_path <- system.file("extdata/bam_files", package="ChIPSeqSpike");
-bigwig_path <- system.file("extdata/bigwig_files", package="ChIPSeqSpike");
-gff_vec <- system.file("extdata/test_coord.gff", package="ChIPSeqSpike");
-genome_name <- "hg19";
-output_folder <- "test_chipseqspike";
+info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike")
+bam_path <- system.file("extdata/bam_files", package="ChIPSeqSpike")
+bigwig_path <- system.file("extdata/bigwig_files", package="ChIPSeqSpike")
+gff_vec <- system.file("extdata/test_coord.gff", package="ChIPSeqSpike")
+genome_name <- "hg19"
+output_folder <- "test_chipseqspike"
 bigwig_files <- system.file("extdata/bigwig_files", 
                             c("H3K79me2_0-filtered.bw",
                               "H3K79me2_100-filtered.bw",
                               "H3K79me2_50-filtered.bw",
                               "input_0-filtered.bw",
                               "input_100-filtered.bw",
-                              "input_50-filtered.bw"), package="ChIPSeqSpike");
+                              "input_50-filtered.bw"), package="ChIPSeqSpike")
 
 ## Copying example files
-dir.create("./test_chipseqspike");
-mock <- file.copy(bigwig_files, "test_chipseqspike");
+dir.create("./test_chipseqspike")
+mock <- file.copy(bigwig_files, "test_chipseqspike")
 
 ## Performing spike-in normalization
 csds_test <- spikePipe(info_file_csv, bam_path, bigwig_path, gff_vec, 
-                       genome_name, outputFolder = output_folder);
+                       genome_name, outputFolder = output_folder)
 ```
 
 
@@ -162,8 +162,8 @@ fixed steps bigwig file name of data aligned to the endogenous reference genome
 input DNA experiment aligned to the endogenous reference genome (bigWigInput).
 \newline
 ```{r message = FALSE, warning = FALSE}
-info_file <- read.csv(info_file_csv);
-head(info_file);
+info_file <- read.csv(info_file_csv)
+head(info_file)
 ````
 
 From the info file, two kinds of objects can be generated: either a 
@@ -176,8 +176,8 @@ suitable object. The folder path to the bam and fixed steps bigwig files must
 be provided.
 \newline
 ```{r message = FALSE, warning = FALSE}
-csds_test <- spikeDataset(info_file_csv, bam_path, bigwig_path);
-is(csds_test);
+csds_test <- spikeDataset(info_file_csv, bam_path, bigwig_path)
+is(csds_test)
 ````
 
 
@@ -191,8 +191,8 @@ data. ChIPSeqSpike reduces such time by providing a boost mode.
 \newline
 ```{r message = FALSE, warning = FALSE}
 csds_testBoost <- spikeDataset(info_file_csv, bam_path, bigwig_path, 
-boost = TRUE);
-is(csds_testBoost);
+boost = TRUE)
+is(csds_testBoost)
 ````
 Binding scores for each experiment are stored in a GRanges object and are 
 directly accessible by functions.
@@ -216,17 +216,17 @@ factors for all experiments. In the following example, scores are computed
 using chromosome 1 only. Scores on the whole dataset are also indicated below.
 \newline
 ```{r message = FALSE, warning = FALSE}
-csds_test <- estimateScalingFactors(csds_test, verbose = FALSE);
+csds_test <- estimateScalingFactors(csds_test, verbose = FALSE)
 ````
 The different scores can be visualized:
 \newline
 ```{r message = FALSE, warning = FALSE}
 ## Scores on testing sub-samples
-spikeSummary(csds_test);
+spikeSummary(csds_test)
 
 ##Scores on whole dataset
-data(result_estimateScalingFactors);
-spikeSummary(csds);
+data(result_estimateScalingFactors)
+spikeSummary(csds)
 ````
 
 An important parameter to keep in mind when performing spike-in with ChIP-seq 
@@ -238,10 +238,10 @@ exogenous DNA should not affect the normalization, whereas having less than 2%
 is usually not sufficient to perform a reliable normalization.
 \newline
 ```{r message = FALSE}
-getRatio(csds_test);
+getRatio(csds_test)
 
 ## Result on the whole dataset
-data(ratio);
+data(ratio)
 ratio
 ````
 
@@ -255,7 +255,7 @@ exogenous scaling factors (see sections [2.3.5](#RPMreversal) and
 \newline
 \newline
 ```{r message = FALSE, warning = FALSE}
-csds_test <- scaling(csds_test, outputFolder = output_folder);
+csds_test <- scaling(csds_test, outputFolder = output_folder)
 ````
  In the context of this vignette, output_folder is precised since the testing 
 files were copied to a temporary 'test_chipseqspike' folder. The slots 
@@ -276,7 +276,7 @@ stored in the dataset object and no files are written. For this latter case,
 the method exportBigWigs can be used to output the transformed files.
 \newline
 ```{r message = FALSE, warning = FALSE}
-csds_test <- inputSubtraction(csds_test);
+csds_test <- inputSubtraction(csds_test)
 ````
 
 ### RPM scaling reversal {#RPMreversal}
@@ -286,7 +286,7 @@ reversed in order for the data to be normalized by the exogenous scaling
 factors.
 \newline
 ```{r message = FALSE, warning = FALSE}
-csds_test <- scaling(csds_test, reverse = TRUE);
+csds_test <- scaling(csds_test, reverse = TRUE)
 ````
 \newpage
 ### Exogenous scaling {#exoscaling}
@@ -294,7 +294,7 @@ csds_test <- scaling(csds_test, reverse = TRUE);
 Finally, exogenous scaling factors are applied to the data.
 \newline
 ```{r message = FALSE, warning = FALSE}
-csds_test <- scaling(csds_test, type = "exo");
+csds_test <- scaling(csds_test, type = "exo")
 ````
 
 ### Extract binding values
@@ -311,7 +311,7 @@ package corresponding to the endogenous organism, see the
 package documentation.
 \newline
 ```{r message = FALSE, warning = FALSE}
-csds_test <- extractBinding(csds_test, gff_vec, genome_name);
+csds_test <- extractBinding(csds_test, gff_vec, genome_name)
 ````
 
 # Plotting data
@@ -334,15 +334,15 @@ format. Here is the result of profiling H3K79me2 on the 100 mostly bound genes
 at 0% inhibitor treatment (figure \ref{figure1}).
 \newline
 ```{r message = FALSE, warning = FALSE, fig.cap="Spiked experiment upon different percentages concentrations of inhibitor treatment \\label{figure1}", fig.height = 6}
-data(result_extractBinding);
-plotProfile(csds, legend = TRUE);
+data(result_extractBinding)
+plotProfile(csds, legend = TRUE)
 ````
 
 The unspiked data (however RPM scaled and input subtracted) can be added 
 to the plot (figure \ref{figure2}).
 \newline
 ```{r message = FALSE, warning = FALSE, fig.cap="Same as figure 1 including unspiked data \\label{figure2}", fig.height = 7}
-plotProfile(csds, legend = TRUE, notScaled = TRUE);
+plotProfile(csds, legend = TRUE, notScaled = TRUE)
 ````     
 
 \newpage
@@ -350,7 +350,7 @@ The effect of the individual processing steps for each experiment can also be
 plotted.
 \newline
 ```{r message = FALSE, warning = FALSE}
-plotTransform(csds, legend = TRUE, separateWindows = TRUE);
+plotTransform(csds, legend = TRUE, separateWindows = TRUE)
 ````
 
 
@@ -368,7 +368,7 @@ being sub-sorted by decreasing values.
 \newline
 \newline
 ```{r message = FALSE, warning = FALSE, fig.cap="kmeans clustering of spiked data \\label{figure3}", fig.height = 5}
-plotHeatmaps(csds, nb_of_groups = 2, clustering_method = "kmeans");
+plotHeatmaps(csds, nb_of_groups = 2, clustering_method = "kmeans")
 ````
 
 \newpage
@@ -389,7 +389,7 @@ indicating confidence intervals.
 ```{r message = FALSE, warning = FALSE, fig.cap="Complete representation of the whole procedure using boxplots (without outliers)\\label{figure5}", fig.height = 6}
 par(cex.axis=0.5)
 boxplotSpike(csds, rawFile = TRUE, rpmFile = TRUE, bgsubFile = TRUE, 
-revFile = TRUE, spiked = TRUE, outline = FALSE);
+revFile = TRUE, spiked = TRUE, outline = FALSE)
 ````      
 
 \newpage
@@ -398,7 +398,7 @@ Figure \ref{figure6} shows spiked experiments indicating each mean value, mean
 \newline
 ```{r message = FALSE, warning = FALSE, fig.cap="Spiked data with mean and standard deviation - Each point represents a mean binding value on a given gene \\label{figure6}", fig.height = 6}
 boxplotSpike(csds, outline = FALSE, violin=TRUE, mean_with_sd = TRUE,
- jitter = TRUE);
+ jitter = TRUE)
 ````
 
 
@@ -417,9 +417,9 @@ Figure \ref{figure7} shows two correlation table representations between spiked
  experiments.
 \newline
 ```{r message = FALSE, warning = FALSE, fig.cap="Correlation table of spiked data with circle (left) or numbers (right)\\label{figure7}", fig.height = 6, fig.width=10}
-par(mfrow=c(1,2));
-plotCor(csds, heatscatterplot = FALSE);
-plotCor(csds, heatscatterplot = FALSE, method_corrplot = "number");
+par(mfrow=c(1,2))
+plotCor(csds, heatscatterplot = FALSE)
+plotCor(csds, heatscatterplot = FALSE, method_corrplot = "number")
 ````
 
 Figure \ref{figure8} illustrates a heatscatter plot of spiked data after log 
@@ -428,7 +428,7 @@ transformation (only positive mean binding values are kept) and figure
 gene set.
 \newline
 ```{r message = FALSE, warning =  FALSE, fig.cap="Heatscatter of spiked data after log transformation \\label{figure8}", fig.height=6}
-plotCor(csds, method_scale = "log");
+plotCor(csds, method_scale = "log")
 ````        
         
         
@@ -437,13 +437,13 @@ plotCor(csds, method_scale = "log");
           
           
 ```{r message = FALSE, warning = FALSE, include = FALSE}
-unlink("test_chipseqspike/", recursive = TRUE);
+unlink("test_chipseqspike/", recursive = TRUE)
 ````
 
 # Session info
 
 ```{r}
-sessionInfo(package="ChIPSeqSpike");
+sessionInfo(package="ChIPSeqSpike")
 ````        
 # References
 

@@ -64,8 +64,8 @@ genome (endoCount) and the number of reads aligned to the exogenous genome
 }}
 
 \examples{
-data("result_estimateScalingFactors");
-spikeSummary(csds);
+data("result_estimateScalingFactors")
+spikeSummary(csds)
 }
 
 \seealso{

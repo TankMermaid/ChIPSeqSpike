@@ -76,28 +76,28 @@ verbose = TRUE)
 
 \examples{
 ## Mock example on a restricted number of reads
-info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike");
-bam_path <- system.file(c("extdata/bam_files"), package="ChIPSeqSpike");
-bigwig_path <- system.file(c("extdata/bigwig_files"), package="ChIPSeqSpike");
+info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike")
+bam_path <- system.file(c("extdata/bam_files"), package="ChIPSeqSpike")
+bigwig_path <- system.file(c("extdata/bigwig_files"), package="ChIPSeqSpike")
 
 csds <- spikeDataset(infoFile = info_file_csv, bamPath = bam_path, 
-                     bigWigPath = bigwig_path);
+                     bigWigPath = bigwig_path)
 
 ## Copying test files to the current folder
-originalBW_vec <- as.character(getBigWigFile(csds));
-dir.create("./test_chipseqspike");
-result <- file.copy(originalBW_vec, "test_chipseqspike");
+originalBW_vec <- as.character(getBigWigFile(csds))
+dir.create("./test_chipseqspike")
+result <- file.copy(originalBW_vec, "test_chipseqspike")
 
-csds <- estimateScalingFactors(csds);
+csds <- estimateScalingFactors(csds)
 
 ## Apply RPM scaling
-csds <- scaling(csds, outputFolder = "test_chipseqspike");
+csds <- scaling(csds, outputFolder = "test_chipseqspike")
 
 ## Apply input subtraction
-csds <- inputSubtraction(csds);
+csds <- inputSubtraction(csds)
 
 ## Delete all files generated in this example
-unlink("test_chipseqspike/", recursive = TRUE);
+unlink("test_chipseqspike/", recursive = TRUE)
 }
 
 \seealso{

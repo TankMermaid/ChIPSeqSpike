@@ -66,8 +66,8 @@
 
     \item{\code{getBigWigFile}}{Returns the input bigWig path}
 
-    \item{\code{getExperimentList}}{Returns a character vector of paths to the
-                                    experiment bigWig files}
+    \item{\code{getExperimentListBigWigs}}{Returns a character vector of paths 
+                                          to the experiment bigWig files}
 
     \item{\code{getExpName}}{Returns a character vector of experiment names}
 
@@ -147,7 +147,7 @@ csds <- ChIPSeqSpikeDatasetBoost(endogenousBam_vec = file_vec[2],
                          bigWigFile_endogenous_vec = file_vec[3], 
                          inputBigWigFile = file_vec[4], 
                          inputBamFile = file_vec[5], 
-                         expnames = "H3K79me2_0");
+                         expnames = "H3K79me2_0")
 
 csds
 }

@@ -94,14 +94,14 @@ paired = FALSE, verbose = TRUE)
 \examples{
 
 ## Mock example on a restricted number of reads
-info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike");
-bam_path <- system.file(c("extdata/bam_files"), package="ChIPSeqSpike");
-bigwig_path <- system.file(c("extdata/bigwig_files"), package="ChIPSeqSpike");
+info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike")
+bam_path <- system.file(c("extdata/bam_files"), package="ChIPSeqSpike")
+bigwig_path <- system.file(c("extdata/bigwig_files"), package="ChIPSeqSpike")
 
 csds <- spikeDataset(infoFile = info_file_csv, bamPath = bam_path, 
-                     bigWigPath = bigwig_path);
+                     bigWigPath = bigwig_path)
 
-csds <- estimateScalingFactors(csds);
+csds <- estimateScalingFactors(csds)
 }
 
 \seealso{

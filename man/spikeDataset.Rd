@@ -67,19 +67,19 @@ provided and boost = TRUE.
 }
 
 \examples{
-info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike");
-bam_path <- system.file(c("extdata/bam_files"), package="ChIPSeqSpike");
-bigwig_path <- system.file(c("extdata/bigwig_files"), package="ChIPSeqSpike");
+info_file_csv <- system.file("extdata/info.csv", package="ChIPSeqSpike")
+bam_path <- system.file(c("extdata/bam_files"), package="ChIPSeqSpike")
+bigwig_path <- system.file(c("extdata/bigwig_files"), package="ChIPSeqSpike")
 
 ## Returns ChIPSeqSpikeDatasetList
 csds <- spikeDataset(infoFile = info_file_csv, bamPath = bam_path, 
-                     bigWigPath = bigwig_path);
+                     bigWigPath = bigwig_path)
 is(csds)
 csds
 
 ## Returns ChIPSeqSpikeDatasetListBoost
 csds <- spikeDataset(infoFile = info_file_csv, bamPath = bam_path, 
-                     bigWigPath = bigwig_path, boost = TRUE);
+                     bigWigPath = bigwig_path, boost = TRUE)
 is(csds)
 csds
 }
