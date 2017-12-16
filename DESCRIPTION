@@ -1,7 +1,7 @@
 Package: ChIPSeqSpike
 Type: Package
 Title: ChIP-Seq data scaling according to spike-in control 
-Version: 0.99.3
+Version: 0.99.4
 Date: 2017-12-16
 Author: Nicolas Descostes
 Maintainer: Nicolas Descostes <nicolas.descostes@gmail.com>
@@ -28,7 +28,7 @@ Imports: tools, stringr, Rsamtools, GenomicRanges, IRanges,
     utils, BiocGenerics, S4Vectors
 VignetteBuilder: knitr
 Suggests: BiocStyle, knitr, rmarkdown, testthat
-Depends:  R (>= 3.4), rtracklayer (>= 1.37.6)
+Depends:  R (>= 3.5), rtracklayer (>= 1.37.6)
 biocViews: ChIPSeq, Sequencing, Normalization, Transcription, Coverage, 
            DifferentialMethylation, Epigenetics, DataImport, 
            HistoneModification
